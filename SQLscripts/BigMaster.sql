@@ -80,7 +80,7 @@ Create Table Stat(
 
 Create Table Drill(
 	ID int identity(1,1),
-	[Name] varchar(100) not null,
+	[Name] varchar(100) not null UNIQUE,
 	[Description] text,
 	Primary Key (ID)
 );
@@ -117,7 +117,7 @@ Create Table HasStat(
 		on update cascade,
 	Quantity int CHECK (Quantity >=0),
 	[Date] date not null Check([Date] <= GetDate()),
-	Primary Key(StatName, PlayerID)
+	Primary Key(StatName, PlayerID, [Date])
 );
 
 Create Table Targets(
