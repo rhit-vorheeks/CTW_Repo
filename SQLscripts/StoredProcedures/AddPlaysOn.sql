@@ -37,34 +37,40 @@ BEGIN
 		RETURN 4
 	END
 	
+	IF(@Username NOT IN(select Username From Person))Begin
+		RAISERROR('This person is not a Person. Add Person first.', 14, 1)
+		RETURN 5
+
+	End 
+
 	DECLARE @ID int 
 	SELECT @ID = ID From Person Where Username = @Username
 
 	IF(@ID NOT IN (Select ID From Player)) Begin
 		RAISERROR('This person is not a Player. Add player first.', 14, 1)
-		RETURN 5
+		RETURN 6
 	END
 
 	IF (@PositionName NOT IN(select [Name] From Position))
 	BEGIN 
 		RAISERROR('This position does not exist.', 14, 1)
-		RETURN 6
+		RETURN 7
 	END
 
 	IF (@StartDate > GETDATE() ) BEGIN
 		RAISERROR('Illegal Start Date.', 14, 1)
-		RETURN 7
+		RETURN 8
 	END
 
 	IF (@StartDate > @EndDate ) BEGIN
 		RAISERROR('Illegal End Date.', 14, 1)
-		RETURN 8
+		RETURN 9
 	END
 
 	IF(EXISTS(select PositionName, PlayerID, TeamID From PlaysOn Where PlayerID = @ID AND PositionName = @PositionName
 	AND TeamID = @TeamID))BEGIN
 		RAISERROR('Player already plays on this position on this team.', 14, 1)
-		RETURN 9
+		RETURN 10
 	END
 
 	INSERT INTO PlaysOn(PlayerID, TeamID, PositionName, [StartDate], EndDate)
