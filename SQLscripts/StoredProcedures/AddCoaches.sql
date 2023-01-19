@@ -45,20 +45,37 @@ BEGIN
 		RETURN 6
 	END 
 	
-	IF(@EndDate>@StartDate)Begin
+	IF(@EndDate<@StartDate)Begin
 		RAISERROR('Illegal End Date.', 14, 1)
 		RETURN 7
 	END
 
-	IF(GETDATE() > @StartDate)BEGIN
+	IF(GETDATE() < @StartDate)BEGIN
 		RAISERROR('Illegal Start Date.', 14, 1)
 		RETURN 8
 	END
 
-	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID))BEGIN
+	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID AND StartDate = @StartDate))BEGIN
 		RAISERROR('Coach is already on the team.', 14, 1)
 		RETURN 9
 	END
+
+
+	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID ))BEGIN
+		
+		Declare @LastStartDate date
+		Select @LastStartDate = MAX (StartDate) From Coaches Where CoachID = @ID AND TeamID = @TeamID Group by CoachID, TeamID
+		
+		Declare @End date
+		select @End = EndDate from Coaches where TeamID = @TeamID AND CoachID= @ID  AND StartDate = @LastStartDate;
+
+		IF(@End is null OR @End ='')Begin 
+			RAISERROR('Coach still holds this position.', 14, 1)
+			RETURN 10
+
+		End 
+	END
+
 
 
     INSERT INTO Coaches ([CoachID], TeamID, StartDate,EndDate)

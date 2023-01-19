@@ -12,15 +12,15 @@ CREATE PROCEDURE AddPerson
 AS
 
 BEGIN
-	IF (@FName is null OR @LName is null) BEGIN
-		RAISERROR('First or last name cannot be null.', 14, 1)
+	IF (@FName is null OR @LName is null OR @FName = '' OR @LName='' ) BEGIN
+		RAISERROR('First or last name cannot be null or empty.', 14, 1)
 		RETURN 1
 	END
-	IF (@Username is null OR @Password is null) BEGIN
+	IF (@Username is null OR @Password is null OR @Username='' OR @Password='') BEGIN
 		RAISERROR('Username or Password cannot be null.', 14, 1)
 		RETURN 2
 	END
-	IF (@Salt is null) BEGIN
+	IF (@Salt is null Or @Salt ='') BEGIN
 		RAISERROR('Salt cannot be null.', 14, 1)
 		RETURN 3
 	END

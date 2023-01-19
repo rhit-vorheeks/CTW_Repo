@@ -107,7 +107,7 @@ Create Table Coaches(
 	StartDate date not null Check(StartDate <= GetDate()),
 	EndDate date,
 	CHECK(EndDate>= StartDate),
-	Primary Key(CoachID, TeamID)
+	Primary Key(CoachID, TeamID, StartDate)
 );
 
 Create Table HasStat(
