@@ -459,7 +459,7 @@ public class Main {
 
 	}
 
-	public static void connect() throws ParseException {
+	public static void \() throws ParseException {
 		System.out.println("About to Connect");
 
 		String url = "jdbc:sqlserver://${dbServer};databaseName=${dbName};user=${user};password={${pass}}";
