@@ -12,41 +12,58 @@ import javax.swing.JTextField;
 public class CoachRegisterPage {
 	public final Dimension SCREEN_SIZE = new Dimension(750, 600);
 	private JFrame frame;
+	private JPanel textPanel = new JPanel();
+	private JPanel masterPanel = new JPanel();
+	private JLabel promptLabel = new JLabel("Please enter Coach Information:");
+	private JPanel FNamePanel = new JPanel();
+	private JPanel LNamePanel = new JPanel();
+	private JPanel DOBPanel = new JPanel();
+	private JPanel typePanel = new JPanel();
+	private JLabel firstName = new JLabel("First Name:	");
+	private JLabel lastName = new JLabel("Last Name:	");
+	private JLabel DOB = new JLabel("DOB:	");
+	private JLabel type = new JLabel("Type:	");
+	private JTextField firstNameTF = new JTextField();
+	private JTextField lastNameTF = new JTextField();
+	private JTextField DOBTF = new JTextField();
+	private JTextField typeTF = new JTextField();
+	
+	
 
 	public CoachRegisterPage(JFrame frame) {
 		this.frame = frame;
-
-	}
-	
-	public void show() {
-//		/1. Create the frame.
-		JPanel textPanel = new JPanel();
-		JPanel masterPanel = new JPanel();
-
+//		JPanel textPanel = new JPanel();
+//		JPanel masterPanel = new JPanel();
+		
 		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
-
-		JLabel promptLabel = new JLabel("Please enter Coach Information:");
-		JPanel FNamePanel = new JPanel();
-		JPanel LNamePanel = new JPanel();
-		JPanel DOBPanel = new JPanel();
-		JPanel typePanel = new JPanel();
-	
 		
-		JLabel firstName = new JLabel("First Name:	");
-		JLabel lastName = new JLabel("Last Name:	");
-		JLabel DOB = new JLabel("DOB:	");
-		JLabel type = new JLabel("Type:	");
+//		JLabel promptLabel = new JLabel("Please enter Coach Information:");
+//		JPanel FNamePanel = new JPanel();
+//		JPanel LNamePanel = new JPanel();
+//		JPanel DOBPanel = new JPanel();
+//		JPanel typePanel = new JPanel();
 		
-		JTextField firstNameTF = new JTextField();
-		JTextField lastNameTF = new JTextField();
-		JTextField DOBTF = new JTextField();
-		JTextField typeTF = new JTextField();
+		
+//		JLabel firstName = new JLabel("First Name:	");
+//		JLabel lastName = new JLabel("Last Name:	");
+//		JLabel DOB = new JLabel("DOB:	");
+//		JLabel type = new JLabel("Type:	");
+		
+//		JTextField firstNameTF = new JTextField();
+//		JTextField lastNameTF = new JTextField();
+//		JTextField DOBTF = new JTextField();
+//		JTextField typeTF = new JTextField();
 		
 		Dimension TFSize= new Dimension(150,25);
 		firstNameTF.setMaximumSize(TFSize);
 		lastNameTF.setMaximumSize(TFSize);
 		DOBTF.setMaximumSize(TFSize);
 		typeTF.setMaximumSize(TFSize);
+
+	}
+	
+	public void show() {
+//		/1. Create the frame.
 		
 		FNamePanel.add(firstName);
 		FNamePanel.add(firstNameTF);
