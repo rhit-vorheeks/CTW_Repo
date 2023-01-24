@@ -20,15 +20,6 @@ public class main {
 		PlayerRegisterPage prpage = new PlayerRegisterPage(frame);
 		CoachRegisterPage crpage = new CoachRegisterPage(frame);
 
-		regPage.show();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		regPage.clear();
 		lgpage.show();
 		
