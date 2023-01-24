@@ -30,10 +30,12 @@ public class LoginPage {
 	private JTextField passwordTextBox;
 	private JButton loginButton;
 	private JButton registerButton;
+	private RegisterPage regPage;
 	
 
-	public LoginPage(JFrame frame) {
+	public LoginPage(JFrame frame, RegisterPage regPage) {
 		this.frame = frame;
+		this.regPage = regPage;
 		loginButtonPanel = new JPanel();
 		loginDataPanel = new JPanel();
 		masterPanel = new JPanel();
@@ -50,8 +52,8 @@ public class LoginPage {
 		passwordTextBox = new JTextField();
 		loginButton = new JButton("Login");
 		
-		this.onLoginButtonClick();
 		registerButton = new JButton("Register");
+		this.onRegisterButtonClick();
 		
 		usernameTextBox.setMaximumSize(new Dimension(200, 25));
 		passwordTextBox.setMaximumSize(new Dimension(200, 25));
@@ -93,11 +95,13 @@ public class LoginPage {
 		frame.repaint();
 	}
 	
-	public void onLoginButtonClick() {
-		loginButton.addActionListener(new ActionListener() {
+	public void onRegisterButtonClick() {
+		registerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked Login");
+				System.out.println("Clicked Register");
+				clear();
+				regPage.show();
 				
 			} 			
 			

@@ -16,7 +16,7 @@ public class main {
 		frame.setTitle(title);
 		
 		RegisterPage regPage = new RegisterPage(frame);
-		LoginPage lgpage = new LoginPage(frame);
+		LoginPage lgpage = new LoginPage(frame, regPage);
 		PlayerRegisterPage prpage = new PlayerRegisterPage(frame);
 		CoachRegisterPage crpage = new CoachRegisterPage(frame);
 
