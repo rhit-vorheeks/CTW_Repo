@@ -13,25 +13,22 @@ public class RegisterPage {
 	
 	public final Dimension SCREEN_SIZE = new Dimension(750, 600);
 	private JFrame frame;
+	private JPanel textPanel = new JPanel();
+	private JPanel dropDownPanel = new JPanel();
+	private JPanel masterPanel = new JPanel();
+	private JLabel promptLabel = new JLabel("Are you a player or a coach?");
+	private JButton continueButton = new JButton("Continue");
+	private String[]options = {"", "Player", "Coach" };
+	private JComboBox<String> drop = new JComboBox<>(options);
 
 	public RegisterPage(JFrame frame) {
 		this.frame = frame;
+		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 	
 	public boolean show() {
-		JPanel textPanel = new JPanel();
-		JPanel dropDownPanel = new JPanel();
-		JPanel masterPanel = new JPanel();
-
-
-		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		JLabel promptLabel = new JLabel("Are you a player or a coach?");
-		JButton continueButton = new JButton("Continue");
-		String[]options = {"", "Player", "Coach" };
-		JComboBox<String> drop = new JComboBox<>(options);
 		
 		textPanel.add(promptLabel, BorderLayout.CENTER);
 		textPanel.add(drop, BorderLayout.CENTER);
