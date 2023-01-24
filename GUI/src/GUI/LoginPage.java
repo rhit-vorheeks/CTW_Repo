@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,12 +23,19 @@ public class LoginPage {
 	private JPanel masterPanel;
 	private JPanel usernamePanel;
 	private JPanel passwordPanel;
-	private JButton registerButton;
-	private JButton loginButton;
-	private JLabel usernameLabel
 
-	public LoginPage(JFrame frame) {
+	private JLabel usernameLabel;
+	private JLabel passwordLabel;
+	private JTextField usernameTextBox;
+	private JTextField passwordTextBox;
+	private JButton loginButton;
+	private JButton registerButton;
+	private RegisterPage regPage;
+	
+
+	public LoginPage(JFrame frame, RegisterPage regPage) {
 		this.frame = frame;
+		this.regPage = regPage;
 		loginButtonPanel = new JPanel();
 		loginDataPanel = new JPanel();
 		masterPanel = new JPanel();
@@ -37,13 +46,14 @@ public class LoginPage {
 		usernamePanel.setLayout(new BoxLayout(usernamePanel, BoxLayout.X_AXIS));
 		passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.X_AXIS));
 		
+		usernameLabel = new JLabel(" Username: ");
+		passwordLabel = new JLabel("Password:  ");
+		usernameTextBox = new JTextField();
+		passwordTextBox = new JTextField();
+		loginButton = new JButton("Login");
 		
-		JLabel usernameLabel = new JLabel(" Username: ");
-		JLabel passwordLabel = new JLabel("Password:  ");
-		JTextField usernameTextBox = new JTextField();
-		JTextField passwordTextBox = new JTextField();
-		JButton loginButton = new JButton("Login");
-		JButton registerButton = new JButton("Register");
+		registerButton = new JButton("Register");
+		this.onRegisterButtonClick();
 		
 		usernameTextBox.setMaximumSize(new Dimension(200, 25));
 		passwordTextBox.setMaximumSize(new Dimension(200, 25));
@@ -71,7 +81,6 @@ public class LoginPage {
 		frame.setSize(SCREEN_SIZE);
 		frame.setTitle("Circle The Wagons");
 
-		// 5. Show it.
 		frame.setVisible(true);
 		return true;
 	}
@@ -84,6 +93,20 @@ public class LoginPage {
 	public void clear() {
 		frame.getContentPane().removeAll();
 		frame.repaint();
+	}
+	
+	public void onRegisterButtonClick() {
+		registerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Register");
+				clear();
+				regPage.show();
+				
+			} 			
+			
+		});
+		
 	}
 	
 	
