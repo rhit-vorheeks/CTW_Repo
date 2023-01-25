@@ -14,27 +14,42 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
-public class LoginPage {
+/**
+ * Page used to Log into the system.
+ *
+ */
+public class LoginPage extends AbstractPage {
 
-	public final Dimension SCREEN_SIZE = new Dimension(750, 600);
-	private JFrame frame;
+	// Panels
 	private JPanel loginButtonPanel;
 	private JPanel loginDataPanel;
 	private JPanel masterPanel;
 	private JPanel usernamePanel;
 	private JPanel passwordPanel;
 
+	// Labels
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
+	
+	// Text Fields
 	private JTextField usernameTextBox;
 	private JTextField passwordTextBox;
+	
+	// Buttons
 	private JButton loginButton;
 	private JButton registerButton;
+	
+	// Page references
 	private RegisterPage regPage;
 	
-
+	/**
+	 * Creates a LoginPage so the user can log in
+	 * @param frame
+	 * @param regPage
+	 */
 	public LoginPage(JFrame frame, RegisterPage regPage) {
-		this.frame = frame;
+		super(frame);
+		
 		this.regPage = regPage;
 		loginButtonPanel = new JPanel();
 		loginDataPanel = new JPanel();
@@ -52,6 +67,7 @@ public class LoginPage {
 		passwordTextBox = new JTextField();
 		loginButton = new JButton("Login");
 		
+		// Setup Button
 		registerButton = new JButton("Register");
 		this.onRegisterButtonClick();
 		
@@ -59,7 +75,8 @@ public class LoginPage {
 		passwordTextBox.setMaximumSize(new Dimension(200, 25));
 	}
 	
-	public boolean show() {
+	public void show() {
+		JFrame frame = this.getFrame();
 
 		loginButtonPanel.add(loginButton, BorderLayout.CENTER);
 		loginButtonPanel.add(registerButton, BorderLayout.CENTER);
@@ -78,21 +95,7 @@ public class LoginPage {
 
 		frame.add(masterPanel);
 
-		frame.setSize(SCREEN_SIZE);
-		frame.setTitle("Circle The Wagons");
-
 		frame.setVisible(true);
-		return true;
-	}
-	
-	public boolean hide() {
-		frame.setVisible(false);
-		return true;
-	}
-	
-	public void clear() {
-		frame.getContentPane().removeAll();
-		frame.repaint();
 	}
 	
 	public void onRegisterButtonClick() {

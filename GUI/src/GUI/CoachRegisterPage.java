@@ -9,29 +9,40 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class CoachRegisterPage {
-	public final Dimension SCREEN_SIZE = new Dimension(750, 600);
-	private JFrame frame;
+/**
+ * Page shown to gather more information about the coach during the registration process.
+ *
+ */
+public class CoachRegisterPage extends AbstractPage {
+	
+	// Panels
 	private JPanel textPanel = new JPanel();
 	private JPanel masterPanel = new JPanel();
-	private JLabel promptLabel = new JLabel("Please enter Coach Information:");
 	private JPanel FNamePanel = new JPanel();
 	private JPanel LNamePanel = new JPanel();
 	private JPanel DOBPanel = new JPanel();
 	private JPanel typePanel = new JPanel();
+	
+	// Labels
+	private JLabel promptLabel = new JLabel("Please enter Coach Information:");
 	private JLabel firstName = new JLabel("First Name:	");
 	private JLabel lastName = new JLabel("Last Name:	");
 	private JLabel DOB = new JLabel("DOB:	");
 	private JLabel type = new JLabel("Type:	");
+	
+	// Text Fields
 	private JTextField firstNameTF = new JTextField();
 	private JTextField lastNameTF = new JTextField();
 	private JTextField DOBTF = new JTextField();
 	private JTextField typeTF = new JTextField();
 	
 	
-
+	/**
+	 * Constructs a page that is used to register a coach.
+	 * @param frame
+	 */
 	public CoachRegisterPage(JFrame frame) {
-		this.frame = frame;
+		super(frame);
 //		JPanel textPanel = new JPanel();
 //		JPanel masterPanel = new JPanel();
 		
@@ -63,7 +74,7 @@ public class CoachRegisterPage {
 	}
 	
 	public void show() {
-//		/1. Create the frame.
+		JFrame frame = this.getFrame();
 		
 		FNamePanel.add(firstName);
 		FNamePanel.add(firstNameTF);
@@ -97,20 +108,9 @@ public class CoachRegisterPage {
 		
 		frame.add(masterPanel);
 
-		frame.setSize(SCREEN_SIZE);
-		frame.setTitle("Circle The Wagons");
 
 		// 5. Show it.
 		frame.setVisible(true);
 	}
 	
-	public boolean hide() {
-		frame.setVisible(false);
-		return true;
-	}
-	
-	public void clear() {
-		frame.getContentPane().removeAll();
-		frame.repaint();
-	}
 }

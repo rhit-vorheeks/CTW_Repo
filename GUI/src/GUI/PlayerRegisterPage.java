@@ -9,16 +9,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class PlayerRegisterPage {
+/**
+ * Page shown to gather more information about the player during the registration process.
+ *
+ */
+public class PlayerRegisterPage extends AbstractPage {
 
-	public final Dimension SCREEN_SIZE = new Dimension(750, 600);
-	private JFrame frame;
-
+	/**
+	 * Constructs a PlayerRegister page
+	 * @param frame
+	 */
 	public PlayerRegisterPage(JFrame frame) {
-		this.frame = frame;
+		super(frame);
 	}
 	
-	public boolean show() {
+	public void show() {
+		JFrame frame = this.getFrame();
+		
 		JPanel textPanel = new JPanel();
 		JPanel masterPanel = new JPanel();
 
@@ -91,23 +98,9 @@ public class PlayerRegisterPage {
 		
 		frame.add(masterPanel);
 
-		frame.setSize(SCREEN_SIZE);
-		frame.setTitle("Circle The Wagons");
-
 		// 5. Show it.
 		frame.setVisible(true);
-		return true;
 
-	}
-	
-	public boolean hide() {
-		frame.setVisible(false);
-		return true;
-	}
-	
-	public void clear() {
-		frame.getContentPane().removeAll();
-		frame.repaint();
 	}
 	
 	
