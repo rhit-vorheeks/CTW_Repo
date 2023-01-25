@@ -131,9 +131,12 @@ public class PlayerRegisterPage extends AbstractPage {
 		FNameValue = firstNameTF.getText();
 		LNameValue = lastNameTF.getText();
 		DOBValue = DOBTF.getText();
+		try {
 		heightValue = Integer.parseInt(heightTF.getText());
 		weightValue = Integer.parseInt(weightTF.getText());
-
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Not a valid height or weight.");
+		}
 	}
 
 	public void onRegisterButtonClick() {

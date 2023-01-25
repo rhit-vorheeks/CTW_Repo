@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -98,20 +99,24 @@ public class RegisterPage extends AbstractPage {
 		continueButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clear();
 
 				String selection = (String) drop.getSelectedItem();
 
 				if (selection.equals("Player")) {
 					plrPage.saveUserPass(usernameValue, passwordValue);
+					clear();
 					plrPage.show();
 				} else if (selection.equals("Coach")) {
 					coachPage.saveUserPass(usernameValue, passwordValue);
+					clear();
 					coachPage.show();
 				} else {
 					System.out.println("Need to select either player or coach.");
+					JOptionPane.showMessageDialog(null, "Need to select either player or coach.");
+					return;
 				}
 
+			
 			}
 
 		});
