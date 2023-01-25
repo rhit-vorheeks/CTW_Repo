@@ -106,8 +106,14 @@ public class UserService {
 		if (returnValue == 0) {
 			System.out.println("Success");
 			return true;
-		} else if (returnValue != 0) { // catch all error return values
-			JOptionPane.showMessageDialog(null, "Registration Failed.");
+		} else if (returnValue ==1) { // catch all error return values
+			JOptionPane.showMessageDialog(null, "First or Last name cannot be empty.");
+		}else if (returnValue ==2) { // catch all error return values
+			JOptionPane.showMessageDialog(null, "DOB cannot be empty.");
+		}else if (returnValue ==3) { // catch all error return values
+			JOptionPane.showMessageDialog(null, "Username or Password cannot be empty.");
+		}else if (returnValue ==5) { // catch all error return values
+			JOptionPane.showMessageDialog(null, "Username is already taken");
 		}
 		return false;
 
