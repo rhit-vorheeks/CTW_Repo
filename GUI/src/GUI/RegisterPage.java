@@ -1,4 +1,5 @@
 package GUI;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -12,65 +13,73 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Page that is shown during registration process that lets the user choose between registering as a coach or player.
+ * Page that is shown during registration process that lets the user choose
+ * between registering as a coach or player.
  *
  */
-public class RegisterPage extends AbstractPage{
-	
+public class RegisterPage extends AbstractPage {
+
 	// Page References
 	private PlayerRegisterPage plrPage;
 	private CoachRegisterPage coachPage;
-	
+
 	// Panels
 	private JPanel textPanel;
 	private JPanel dropDownPanel;
 	private JPanel masterPanel;
-	
+
 	// Labels
 	private JLabel promptLabel;
-	
+
 	// Buttons
 	private JButton continueButton;
-	
+
 	// Dropdown Box
-	private String[] options = {"", "Player", "Coach" };
+	private String[] options = { "", "Player", "Coach" };
 	private JComboBox<String> drop;
+
+	// values
+	private String usernameValue;
+	private String passwordValue;
+	
+	//connection
+	private DatabaseConnectionService connection = null;
 
 	/**
 	 * Constructs a RegisterPage
+	 * 
 	 * @param frame, plrPage, coachPage
 	 */
 	public RegisterPage(JFrame frame, PlayerRegisterPage plrPage, CoachRegisterPage coachPage) {
 		super(frame);
-		
+
 		this.coachPage = coachPage;
 		this.plrPage = plrPage;
-		
+
 		// Panels
 		this.textPanel = new JPanel();
 		this.dropDownPanel = new JPanel();
 		this.masterPanel = new JPanel();
-		
+
 		// Labels
 		this.promptLabel = new JLabel("Are you a player or a coach?");
-		
+
 		// Buttons
 		this.continueButton = new JButton("Continue");
-		
+
 		// Dropdown Box
-		String[] options = {"", "Player", "Coach" };
+		String[] options = { "", "Player", "Coach" };
 		this.drop = new JComboBox<>(options);
-		
 
 		this.masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		this.onContinueButtonClick();
 	}
-	
+
 	public void show() {
 		JFrame frame = this.getFrame();
-		
+
 		textPanel.add(promptLabel, BorderLayout.CENTER);
 		textPanel.add(drop, BorderLayout.CENTER);
 		textPanel.setMaximumSize(new Dimension(900, 300));
@@ -82,30 +91,36 @@ public class RegisterPage extends AbstractPage{
 
 		frame.add(masterPanel);
 
-
-		// 5. Show it.
 		frame.setVisible(true);
 	}
-	
+
 	public void onContinueButtonClick() {
 		continueButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clear();
-				
+
 				String selection = (String) drop.getSelectedItem();
-				
+
 				if (selection.equals("Player")) {
+					plrPage.saveUserPass(usernameValue, passwordValue);
 					plrPage.show();
 				} else if (selection.equals("Coach")) {
+					coachPage.saveUserPass(usernameValue, passwordValue);
 					coachPage.show();
 				} else {
 					System.out.println("Need to select either player or coach.");
 				}
-				
-			} 			
-			
+
+			}
+
 		});
+
+	}
+
+	public void saveUserPass(String name, String pass) {
+		this.usernameValue = name;
+		this.passwordValue = pass;
 		
 	}
 
