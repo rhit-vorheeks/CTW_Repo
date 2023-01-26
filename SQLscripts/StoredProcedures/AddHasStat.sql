@@ -10,12 +10,12 @@ AS
 
 BEGIN
 	IF (@Name is null) BEGIN
-		RAISERROR('Name cannot be null.', 14, 1)
+		PRINT('Name cannot be null.')
 		RETURN 1
 	END
 
 	IF (@Username is null) BEGIN
-		RAISERROR('Username cannot be null.', 14, 1)
+		PRINT('Username cannot be null.')
 		RETURN 2
 	END
 
@@ -26,12 +26,12 @@ BEGIN
 
 	IF (@Name NOT IN(select [Name] From Stat))
 	BEGIN 
-		RAISERROR('This stat does not exist.', 14, 1)
+		PRINT('This stat does not exist.')
 		RETURN 3
 	END
 
 	IF(@Username NOT IN (SELECT Username From Person Where Username = @Username)) BEGIN
-		RAISERROR('This username does not exist. Add account first.', 14, 1)
+		PRINT('This username does not exist. Add account first.')
 		RETURN 4
 	END
 	
@@ -39,22 +39,22 @@ BEGIN
 	SELECT @ID = ID From Person Where Username = @Username
 
 	IF(@ID NOT IN (Select ID From Player)) Begin
-		RAISERROR('This person is not a Player. Add player first.', 14, 1)
+		PRINT('This person is not a Player. Add player first.')
 		RETURN 5
 	END
 
 	IF(@Quant<0) Begin
-		RAISERROR('Illegal Quantity', 14, 1)
+		PRINT('Illegal Quantity')
 		RETURN 6
 	END
 
 	IF (@Date > GETDATE() ) BEGIN
-		RAISERROR('Illegal Date.', 14, 1)
+		PRINT('Illegal Date.')
 		RETURN 7
 	END
 
 	IF(EXISTS(select StatName, PlayerID From HasStat Where PlayerID = @ID AND StatName = @Name AND [Date] = @Date))BEGIN
-		RAISERROR('Player already has stat on this date.', 14, 1)
+		PRINT('Player already has stat on this date.')
 		RETURN 8
 	END
 

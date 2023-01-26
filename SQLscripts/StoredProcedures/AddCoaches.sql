@@ -10,23 +10,23 @@ AS
 
 BEGIN
 	IF (@Username is null) BEGIN
-		RAISERROR('Coach Username cannot be null.', 14, 1)
+		PRINT('Coach Username cannot be null.')
 		RETURN 1
 	END
 
 	IF (@StartDate is null) BEGIN
-		RAISERROR('Start Date cannot be null.', 14, 1)
+		PRINT('Start Date cannot be null.')
 		RETURN 2
 	END
 
 	IF (@TeamID is null) BEGIN
-		RAISERROR('Team ID cannot be null.', 14, 1)
+		PRINT('Team ID cannot be null.')
 		RETURN 3
 	END
 
 	IF (@Username NOT IN(select Username From Person))
 	BEGIN 
-		RAISERROR('Coach is not a registerd person. Register person first.', 14, 1)
+		PRINT('Coach is not a registerd person. Register person first.')
 		RETURN 4
 	END 
 
@@ -34,29 +34,29 @@ BEGIN
 	SELECT @ID = ID From Person Where Username = @Username
 
 	IF(@ID NOT IN (Select ID From Coach)) Begin
-		RAISERROR('This person is not a Coach. Add coach first.', 14, 1)
+		PRINT('This person is not a Coach. Add coach first.')
 		RETURN 5
 	END
 	
 
 	IF (@TeamID NOT IN(select ID From Team))
 	BEGIN 
-		RAISERROR('Team is not a registerd team. Add team first.', 14, 1)
+		PRINT('Team is not a registerd team. Add team first.')
 		RETURN 6
 	END 
 	
 	IF(@EndDate<@StartDate)Begin
-		RAISERROR('Illegal End Date.', 14, 1)
+		PRINT('Illegal End Date.')
 		RETURN 7
 	END
 
 	IF(GETDATE() < @StartDate)BEGIN
-		RAISERROR('Illegal Start Date.', 14, 1)
+		PRINT('Illegal Start Date.')
 		RETURN 8
 	END
 
 	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID AND StartDate = @StartDate))BEGIN
-		RAISERROR('Coach is already on the team.', 14, 1)
+		PRINT('Coach is already on the team.')
 		RETURN 9
 	END
 
@@ -70,7 +70,7 @@ BEGIN
 		select @End = EndDate from Coaches where TeamID = @TeamID AND CoachID= @ID  AND StartDate = @LastStartDate;
 
 		IF(@End is null OR @End ='')Begin 
-			RAISERROR('Coach still holds this position.', 14, 1)
+			PRINT('Coach still holds this position.')
 			RETURN 10
 
 		End 

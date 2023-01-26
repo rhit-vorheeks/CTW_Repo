@@ -8,13 +8,13 @@ AS
 
 BEGIN
 	IF (@Username is null) BEGIN
-		RAISERROR('Username cannot be null.', 14, 1)
+		PRINT('Username cannot be null.')
 		RETURN 1
 	END
 
 	IF (@Username NOT IN(select Username From Person))
 	BEGIN 
-		RAISERROR('Coach is not a registerd person. Register person first.', 14, 1)
+		PRINT('Coach is not a registerd person. Register person first.')
 		RETURN 2
 	END 
 
@@ -22,7 +22,7 @@ BEGIN
 	SELECT @ID = ID From Person Where Username = @Username
 	
 	IF(EXISTS(Select ID From Coach where ID = @ID))Begin
-		RAISERROR('Coach already exists.', 14, 1)
+		PRINT('Coach already exists.')
 		RETURN 3
 	END
 

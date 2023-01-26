@@ -9,13 +9,13 @@ AS
 
 BEGIN
 	IF (@Name is null) BEGIN
-		RAISERROR('Name cannot be null.', 14, 1)
+		PRINT('Name cannot be null.')
 		RETURN 1
 	END
 
 	IF (@Name IN(select [Name] From Stat))
 	BEGIN 
-		RAISERROR('This stat already exists.', 14, 1)
+		PRINT('This stat already exists.')
 		RETURN 2
 	END 
 

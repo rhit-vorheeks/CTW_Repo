@@ -8,27 +8,27 @@ AS
 
 BEGIN
 	IF (@Name is null) BEGIN
-		RAISERROR('Stat Name cannot be null.', 14, 1)
+		PRINT('Stat Name cannot be null.')
 		RETURN 1
 	END
 
 	IF (@DrillID is null) BEGIN
-		RAISERROR('Drill ID cannot be null.', 14, 1)
+		PRINT('Drill ID cannot be null.')
 		RETURN 2
 	END
 
 	IF(@DrillID NOT IN (Select ID from Drill))BEGIN
-		RAISERROR('This is not a drill.', 14, 1)
+		PRINT('This is not a drill.')
 		RETURN 3
 	END
 	
 	IF(@Name NOT IN (Select [Name] from Stat))BEGIN
-		RAISERROR('This is not a stat.', 14, 1)
+		PRINT('This is not a stat.')
 		RETURN 4
 	END
 	
 	IF(EXISTS(select DrillID, StatName From Targets Where DrillID = @DrillID AND StatName = @Name))BEGIN
-		RAISERROR('This drill already targets this stat.', 14, 1)
+		PRINT('This drill already targets this stat.')
 		RETURN 5
 	END
 

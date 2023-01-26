@@ -8,12 +8,12 @@ AS
 
 BEGIN
 	IF (@Name is null) BEGIN
-		RAISERROR('Name cannot be null.', 14, 1)
+		PRINT('Name cannot be null.')
 		RETURN 1
 	END
 
 	IF(@Name IN (Select [Name] from Drill))BEGIN
-		RAISERROR('Drill Name is taken.', 14, 1)
+		PRINT('Drill Name is taken.')
 		RETURN 2
 	END
 	
