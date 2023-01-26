@@ -8,7 +8,7 @@ AS
 
 BEGIN
 	IF (@Name is null) BEGIN
-		RAISERROR('Name cannot be null.', 14, 1)
+		PRINT 'Name cannot be null.'
 		RETURN 1
 	END
 		
