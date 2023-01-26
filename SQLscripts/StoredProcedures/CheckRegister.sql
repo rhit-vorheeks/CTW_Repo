@@ -15,5 +15,7 @@ CREATE PROCEDURE CheckRegister
 			RAISERROR('This username is taken', 14, 1)
 			RETURN 2
 		END
+
+		RETURN 0
 	END
 	
