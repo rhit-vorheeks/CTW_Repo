@@ -45,6 +45,7 @@ public class RegisterPage extends AbstractPage {
 	
 	//connection
 	private DatabaseConnectionService connection = null;
+	
 
 	/**
 	 * Constructs a RegisterPage

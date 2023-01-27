@@ -57,14 +57,20 @@ public class LoginPage extends AbstractPage {
 	DatabaseConnectionService connection = null;
 	private CoachHomePage homePage = null;
 
+	
+	// account handler
+	private AccountHandler acct;
+	
 	/**
 	 * Creates a LoginPage so the user can log in
 	 * 
 	 * @param frame
 	 * @param regPage
 	 */
-	public LoginPage(JFrame frame, RegisterPage regPage, DatabaseConnectionService connection) {
+	public LoginPage(JFrame frame, RegisterPage regPage, DatabaseConnectionService connection, AccountHandler acct) {
 		super(frame);
+		
+		this.acct = acct;
 
 		this.regPage = regPage;
 		loginButtonPanel = new JPanel();
@@ -138,7 +144,7 @@ public class LoginPage extends AbstractPage {
 				}
 				
 				regPage.saveUserPass(usernameValue, passwordValue);
-
+				acct.setName(usernameValue);
 				clear();
 				regPage.show();
 
@@ -158,6 +164,8 @@ public class LoginPage extends AbstractPage {
 				// Determine if coach or player and then direct to appropriate home screen
 				String typeValue = userService.login(usernameValue, passwordValue);
 				System.out.println(typeValue);
+				acct.setName(usernameValue);
+				
 				clear();
 
 				if (typeValue.equals("Player")) {

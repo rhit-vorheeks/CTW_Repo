@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.jar.Attributes.Name;
 
 import javax.swing.BoxLayout;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.util.*;
 
 public class TeamPage extends CoachDisplayPage {
 
@@ -35,10 +37,13 @@ public class TeamPage extends CoachDisplayPage {
 	
 	JFrame frame =  null;
 	private DatabaseConnectionService connection = null;
-	private String coachUsername = null;
+
 	
-	public TeamPage(JFrame frame, DatabaseConnectionService connection) {
+	private AccountHandler acct;
+	
+	public TeamPage(JFrame frame, DatabaseConnectionService connection, AccountHandler acct) {
 		super(frame);
+		this.acct = acct;
 		this.frame = frame;
 		this.connection  = connection;
 		nameTF.setMaximumSize(new Dimension(100,50));
@@ -51,10 +56,6 @@ public class TeamPage extends CoachDisplayPage {
 		onSubmitButtonClick();
 	}
 	
-	public void setUserName(String CoachUsername) {
-		this.coachUsername  = CoachUsername;
-
-	}
 	
 	public JPanel show(){
 		masterPanel = super.show();
@@ -89,7 +90,8 @@ public class TeamPage extends CoachDisplayPage {
 				
 				System.out.println(nameValue);
 				System.out.println(leagueValue);
-				addTeam(nameValue,leagueValue);		
+				int id = addTeam(nameValue,leagueValue);	
+				addCoaches(acct.getName(), id);
 								
 			}
 
@@ -97,7 +99,7 @@ public class TeamPage extends CoachDisplayPage {
 	}
 	
 	
-	public boolean addTeam(String TeamName, String League) {
+	public int addTeam(String TeamName, String League) {
 		int returnValue = -1;
 		String mess = "";
 		try {
@@ -113,19 +115,45 @@ public class TeamPage extends CoachDisplayPage {
 			System.out.println(e.toString());
 		
 		}
-		if (returnValue == 0) {
+		if (returnValue > 0) {
 			System.out.println("Success");
 			JOptionPane.showMessageDialog(null, "Team Added");
-			return true;
+			return returnValue;
 		} else {
-			if (returnValue == 1) {
+			if (returnValue <0) {
 				mess = "ERROR: Team name cannot be empty";
 			} 
 			System.out.println(returnValue);
 			JOptionPane.showMessageDialog(null, mess);
-			return false;
+			return returnValue;
 		}
 	}
 	
+	public boolean addCoaches(String username, int teamID) {
+		System.out.println(teamID);
+		int returnValue = -1;
+		String mess = "";
+		try {
+			CallableStatement stmt = connection.getConnection().prepareCall("{? = call AddCoaches(?, ?,?,?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setString(2, username);
+			stmt.setInt(3, teamID);
+			
+			long millis = System.currentTimeMillis();
+			java.sql.Date date= new java.sql.Date(millis);
+		
+			stmt.setDate(4,date);
+			stmt.setDate(5,null);
+			stmt.execute();
+			returnValue = stmt.getInt(1);
+			System.out.println(returnValue);
+
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return false;
+		
+		}
+		return true;
+	}
 
 }

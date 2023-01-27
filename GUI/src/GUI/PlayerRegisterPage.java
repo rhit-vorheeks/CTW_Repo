@@ -147,8 +147,8 @@ public class PlayerRegisterPage extends AbstractPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getDataFromTF();
-				System.out.printf("%s %s %s %d %d %s %s", FNameValue, LNameValue, DOBValue, heightValue, weightValue,
-						usernameValue, passwordValue);
+//				System.out.printf("%s %s %s %d %d %s %s", FNameValue, LNameValue, DOBValue, heightValue, weightValue,
+//						usernameValue, passwordValue);
 
 				if (userService.register(usernameValue, passwordValue, FNameValue, LNameValue, DOBValue, usernameValue,
 						"Player")) {

@@ -58,6 +58,8 @@ public class CoachRegisterPage extends AbstractPage {
 	private DatabaseConnectionService connection;
 	UserService userService = null;
 	private CoachHomePage homePage = null;
+	
+
 
 	/**
 	 * Constructs a page that is used to register a coach.
@@ -132,8 +134,8 @@ public class CoachRegisterPage extends AbstractPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getDataFromTF();
-				System.out.printf("%s %s %s %s %s %s", FNameValue, LNameValue, DOBValue, typeValue, usernameValue,
-						passwordValue);
+//				System.out.printf("%s %s %s %s %s %s", FNameValue, LNameValue, DOBValue, typeValue, usernameValue,
+//						passwordValue);
 
 				if (userService.register(usernameValue, passwordValue, FNameValue, LNameValue, DOBValue, usernameValue,
 						"Coach")) {

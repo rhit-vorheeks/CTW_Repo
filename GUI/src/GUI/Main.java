@@ -13,6 +13,8 @@ public class Main {
 		
 		DatabaseConnectionService connection = new DatabaseConnectionService("titan.csse.rose-hulman.edu", "CTW_DB");
 		connection.connect();
+		
+		AccountHandler acct = new AccountHandler();
 
 		JFrame frame = new JFrame();
 		frame.setSize(SCREEN_SIZE);
@@ -21,8 +23,10 @@ public class Main {
 		CoachRegisterPage crpage = new CoachRegisterPage(frame, connection);
 		PlayerRegisterPage prpage = new PlayerRegisterPage(frame, connection);
 		RegisterPage regPage = new RegisterPage(frame, prpage, crpage);
-		LoginPage lgpage = new LoginPage(frame, regPage, connection);
-		TeamPage teamPage = new TeamPage(frame, connection);
+		
+		LoginPage lgpage = new LoginPage(frame, regPage, connection, acct);
+		
+		TeamPage teamPage = new TeamPage(frame, connection, acct);
 		CoachHomePage coachHomePage = new CoachHomePage(frame);
 		FindDrillPage findDrillPage = new FindDrillPage(frame);
 		FindPlayerStatPage findPlayerStatPage =  new FindPlayerStatPage(frame);
