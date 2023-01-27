@@ -6,11 +6,15 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
@@ -51,6 +55,7 @@ public class LoginPage extends AbstractPage {
 
 	UserService userService = null;
 	DatabaseConnectionService connection = null;
+	private CoachHomePage homePage = null;
 
 	/**
 	 * Creates a LoginPage so the user can log in
@@ -114,6 +119,11 @@ public class LoginPage extends AbstractPage {
 
 		frame.setVisible(true);
 	}
+	
+	public void savePages(CoachHomePage coachHomePage) {
+		this.homePage   = coachHomePage;
+	
+	}
 
 	public void onRegisterButtonClick() {
 		registerButton.addActionListener(new ActionListener() {
@@ -122,6 +132,11 @@ public class LoginPage extends AbstractPage {
 				System.out.println("Clicked Register");
 				getData();
 				System.out.printf("%s %s ", usernameValue, passwordValue);
+				
+				if(!validateSubmit(usernameValue)) {
+					return;
+				}
+				
 				regPage.saveUserPass(usernameValue, passwordValue);
 
 				clear();
@@ -139,23 +154,53 @@ public class LoginPage extends AbstractPage {
 //				System.out.println("Clicked Login");
 				getData();
 				System.out.printf("%s %s \n", usernameValue, passwordValue);
-				clear();
 
 				// Determine if coach or player and then direct to appropriate home screen
-
 				String typeValue = userService.login(usernameValue, passwordValue);
 				System.out.println(typeValue);
+				clear();
 
 				if (typeValue.equals("Player")) {
 					//switch the page
 				} else if (typeValue.equals("Coach")) {
 					//switch the page
+					homePage.show();
 				}
 
 			}
 
 		});
 
+	}
+	
+	public boolean validateSubmit(String username) {
+		int returnValue = -1;
+		String mess = "";
+		try {
+			CallableStatement stmt = connection.getConnection().prepareCall("{? = call CheckRegister(?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setString(2, username);
+			stmt.execute();
+			returnValue = stmt.getInt(1);
+			System.out.println(returnValue);
+
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+		
+		}
+		if (returnValue == 0) {
+			System.out.println("Success");
+			return true;
+		} else {
+			if (returnValue == 1) {
+				mess = "ERROR: Username name cannot be empty";
+			} else if (returnValue == 2) {
+				mess = "ERROR: Username name already exists.";
+			}
+			System.out.println(returnValue);
+			JOptionPane.showMessageDialog(null, mess);
+			return false;
+		}
 	}
 
 	public void getData() {

@@ -41,8 +41,8 @@ public abstract class AbstractPage {
 		frame.repaint();
 	}
 	
-	/**
-	 * Shows the contents on the page's frame.
-	 */
-	public void show() {}
+//	/**
+//	 * Shows the contents on the page's frame.
+//	 */
+//	public void show() {}
 }

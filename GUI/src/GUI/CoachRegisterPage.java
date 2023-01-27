@@ -54,6 +54,7 @@ public class CoachRegisterPage extends AbstractPage {
 
 	private DatabaseConnectionService connection;
 	UserService userService = null;
+	private CoachHomePage homePage = null;
 
 	/**
 	 * Constructs a page that is used to register a coach.
@@ -74,6 +75,11 @@ public class CoachRegisterPage extends AbstractPage {
 		DOBTF.setMaximumSize(TFSize);
 		typeTF.setMaximumSize(TFSize);
 
+	}
+	
+	public void savePages(CoachHomePage coachHomePage) {
+		this.homePage  = coachHomePage;
+	
 	}
 
 	public void show() {
@@ -129,6 +135,7 @@ public class CoachRegisterPage extends AbstractPage {
 				if (userService.register(usernameValue, passwordValue, FNameValue, LNameValue, DOBValue, usernameValue,
 						"Coach")) {
 					clear();
+					homePage.show();
 				}
 
 			}

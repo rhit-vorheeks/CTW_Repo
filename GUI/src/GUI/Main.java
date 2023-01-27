@@ -22,8 +22,21 @@ public class Main {
 		PlayerRegisterPage prpage = new PlayerRegisterPage(frame, connection);
 		RegisterPage regPage = new RegisterPage(frame, prpage, crpage);
 		LoginPage lgpage = new LoginPage(frame, regPage, connection);
-
-		lgpage.show();
+		TeamPage teamPage = new TeamPage(frame, connection);
+		CoachHomePage coachHomePage = new CoachHomePage(frame);
+		FindDrillPage findDrillPage = new FindDrillPage(frame);
+		FindPlayerStatPage findPlayerStatPage =  new FindPlayerStatPage(frame);
+		
+		teamPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
+		coachHomePage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
+		findDrillPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
+		findPlayerStatPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
+		crpage.savePages(coachHomePage);
+		lgpage.savePages(coachHomePage);
+		
+//		teamPage.show();
+//		lgpage.show();
+		coachHomePage.show();
 		
 
 	}

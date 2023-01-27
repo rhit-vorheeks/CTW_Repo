@@ -151,6 +151,7 @@ public class PlayerRegisterPage extends AbstractPage {
 						"Player")) {
 
 					clear();
+					
 				}
 
 			}
