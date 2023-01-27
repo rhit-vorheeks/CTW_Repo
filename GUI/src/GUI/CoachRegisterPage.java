@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -134,6 +137,7 @@ public class CoachRegisterPage extends AbstractPage {
 
 				if (userService.register(usernameValue, passwordValue, FNameValue, LNameValue, DOBValue, usernameValue,
 						"Coach")) {
+					addCoach(usernameValue, typeValue);
 					clear();
 					homePage.show();
 				}
@@ -147,6 +151,26 @@ public class CoachRegisterPage extends AbstractPage {
 	public void saveUserPass(String name, String pass) {
 		this.usernameValue = name;
 		this.passwordValue = pass;
+	}
+	
+	public boolean addCoach(String username, String rank) {
+		int returnValue = -1;
+		String mess = "";
+		try {
+			CallableStatement stmt = connection.getConnection().prepareCall("{? = call AddCoach(?, ?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setString(2, username);
+			stmt.setString(3, rank);
+			stmt.execute();
+			returnValue = stmt.getInt(1);
+			System.out.println(returnValue);
+
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return false;
+		
+		}
+		return true;
 	}
 
 }

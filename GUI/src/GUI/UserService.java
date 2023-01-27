@@ -78,13 +78,13 @@ public class UserService {
 			CallableStatement stmt = dbService.getConnection().prepareCall("{? = call AddPerson(?,?,?,?,?,?,?)}");
 			stmt.registerOutParameter(1, Types.INTEGER);
 
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 			java.util.Date date = null;
 			try {
 				date = sdf.parse(DOB);
 			} catch (ParseException e) {
 //				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Please Enter a DOB");
+				JOptionPane.showMessageDialog(null, "Please Enter a valid DOB");
 				return false;
 			}
 			java.sql.Date d = new java.sql.Date(date.getTime());
@@ -116,7 +116,10 @@ public class UserService {
 		}else if (returnValue ==5) { // catch all error return values
 			JOptionPane.showMessageDialog(null, "Username is already taken");
 		}
-		return false;
+		
+		
+		
+		return false;	
 
 	}
 
@@ -147,5 +150,8 @@ public class UserService {
 		}
 		return getStringFromBytes(hash);
 	}
+	
+		
+
 
 }

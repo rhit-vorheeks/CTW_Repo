@@ -35,6 +35,7 @@ public class TeamPage extends CoachDisplayPage {
 	
 	JFrame frame =  null;
 	private DatabaseConnectionService connection = null;
+	private String coachUsername = null;
 	
 	public TeamPage(JFrame frame, DatabaseConnectionService connection) {
 		super(frame);
@@ -50,6 +51,11 @@ public class TeamPage extends CoachDisplayPage {
 		onSubmitButtonClick();
 	}
 	
+	public void setUserName(String CoachUsername) {
+		this.coachUsername  = CoachUsername;
+
+	}
+	
 	public JPanel show(){
 		masterPanel = super.show();
 		namePanel.add(teamNameLabel);
@@ -63,6 +69,7 @@ public class TeamPage extends CoachDisplayPage {
 		masterPanel.add(leaguePanel, BorderLayout.SOUTH);
 		masterPanel.add(submitButton, BorderLayout.SOUTH);
 
+		frame.setVisible(true);
 		return null;
 		
 	}

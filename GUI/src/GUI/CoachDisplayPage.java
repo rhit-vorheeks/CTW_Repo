@@ -91,7 +91,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 			public void actionPerformed(ActionEvent e) {
 				clear();
 				teamPage.show();
-				System.out.println("Clicked Team");
+//				System.out.println("Clicked Team");
 								
 			}
 

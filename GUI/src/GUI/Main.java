@@ -35,8 +35,8 @@ public class Main {
 		lgpage.savePages(coachHomePage);
 		
 //		teamPage.show();
-//		lgpage.show();
-		coachHomePage.show();
+		lgpage.show();
+//		coachHomePage.show();
 		
 
 	}
