@@ -60,6 +60,12 @@ BEGIN
 		RETURN 9
 	END
 
+	Declare @TName varchar(50)
+	Select @TName = [Name] From Team Where ID = @TeamID
+	IF(@TName in (Select t.Name From Team t join coaches c on t.ID = c.TeamID Where c.CoachID = @ID)) BEGIN
+		Print 'Coach already coaches a team with this name'
+		RETURN 11
+	END
 
 	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID ))BEGIN
 		
