@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.util.*;
 
@@ -24,34 +27,33 @@ public class TeamPage extends CoachDisplayPage {
 
 	JPanel createPanel = new JPanel();
 	JPanel namePanel = new JPanel();
-	JPanel leaguePanel =  new JPanel();
+	JPanel leaguePanel = new JPanel();
 	JPanel masterPanel = new JPanel();
-	
-	
+
 	// Panels for adding a player to a team
 	JPanel addPlayerPanel = new JPanel();
 	JPanel selectTeamPanelForPlayer = new JPanel();
 	JPanel playerUsernamePanel = new JPanel();
 	JPanel playerPositionPanel = new JPanel();
 	JPanel editPlayerButtonsPanel = new JPanel();
-	
+
 	// Panels for adding coach to a team
 	JPanel addCoachPanel = new JPanel();
 	JPanel selectTeamPanelForCoach = new JPanel();
 	JPanel coachUsernamePanel = new JPanel();
 	JPanel editCoachButtonsPanel = new JPanel();
-	
+
 	// Labels for adding player to a team
 	JLabel addPlayerToTeamLabel = new JLabel("Add Player To Team:");
 	JLabel teamLabelForPlayer = new JLabel("Team: ");
 	JLabel playerUsernameLabel = new JLabel("Player Username: ");
 	JLabel positionLabel = new JLabel("Position: ");
-	
+
 	// Labels for adding coach to team
 	JLabel addCoachToTeamLabel = new JLabel("Add Coach To Team:");
 	JLabel teamLabelForCoach = new JLabel("Team: ");
 	JLabel coachUsernameLabel = new JLabel("Coach Username: ");
-	
+
 	// Textfields for adding a player to a team
 	JTextField playerUsernameField = new JTextField();
 
@@ -60,121 +62,179 @@ public class TeamPage extends CoachDisplayPage {
 
 	// Dropdowns for adding a player to a team
 	JComboBox<String> teamSelectDropDownPlayer = new JComboBox<String>();
-	JComboBox<String> PositionSelectDropDownPlayer = new JComboBox<String>();
+	JComboBox<String> positionSelectDropDownPlayer = new JComboBox<String>();
 
 	// Dropdowns for adding a coach to a team
 	JComboBox<String> teamSelectDropDownCoach = new JComboBox<String>();
-	
+
 	// Buttons for adding a player to a team
 	JButton addPlayerButton = new JButton("Add Player");
 	JButton editPlayerButton = new JButton("Update Position");
 	JButton deletePlayerButton = new JButton("Delete Player");
-	
+
 	// Buttons for adding a player to a team
 	JButton addCoachButton = new JButton("Add Coach");
 	JButton deleteCoachButton = new JButton("Delete Coach");
-		
-	
-	
+
 	JLabel createLabel = new JLabel("Add Team: ");
 	JLabel teamNameLabel = new JLabel("Team Name: ");
 	JLabel leagueLabel = new JLabel("League: ");
-	
+
 	JTextField nameTF = new JTextField();
 	JTextField leagueTF = new JTextField();
-	
-	JButton submitButton = new JButton("Submit");	
-	
-	JFrame frame =  null;
+
+	JButton submitButton = new JButton("Submit");
+
+	JFrame frame = null;
 	private DatabaseConnectionService connection = null;
 
-	
 	private AccountHandler acct;
-	
+
 	public TeamPage(JFrame frame, DatabaseConnectionService connection, AccountHandler acct) {
 		super(frame);
 		this.acct = acct;
 		this.frame = frame;
-		this.connection  = connection;
-		nameTF.setMaximumSize(new Dimension(100,50));
-		leagueTF.setMaximumSize(new Dimension(100,50));
-		playerUsernameField.setMaximumSize(new Dimension(100,50));
-		coachUsernameField.setMaximumSize(new Dimension(100,50));
-		
+		this.connection = connection;
+		nameTF.setMaximumSize(new Dimension(100, 50));
+		leagueTF.setMaximumSize(new Dimension(100, 50));
+		playerUsernameField.setMaximumSize(new Dimension(100, 50));
+		coachUsernameField.setMaximumSize(new Dimension(100, 50));
+
 		addPlayerPanel.setLayout(new BoxLayout(addPlayerPanel, BoxLayout.Y_AXIS));
 		addCoachPanel.setLayout(new BoxLayout(addCoachPanel, BoxLayout.Y_AXIS));
-		
-		teamSelectDropDownPlayer.setMaximumSize(new Dimension(100,50));
-		PositionSelectDropDownPlayer.setMaximumSize(new Dimension(100,50));
-		teamSelectDropDownCoach.setMaximumSize(new Dimension(100,50));
-		
-		
+
+//		teamSelectDropDownPlayer.setMaximumSize(new Dimension(100,50));
+//		positionSelectDropDownPlayer.setMaximumSize(new Dimension(150,75));
+//		teamSelectDropDownCoach.setMaximumSize(new Dimension(100,50));
+
 		namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
 		leaguePanel.setLayout(new BoxLayout(leaguePanel, BoxLayout.X_AXIS));
 		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
 		
+		this.onPlayerAddButtonClick();
+
 		onSubmitButtonClick();
 	}
-	
+
+	public String[] getAllPositions() {
+		ResultSet rs;
+		ArrayList<String> arrList = new ArrayList<String>();
+		arrList.add("");
+		try {
+
+			String query = "SELECT Name FROM Position";
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement(query);
+
+			rs = stmt.executeQuery();
+			int positionName = rs.findColumn("Name");
+			while (rs.next()) {
+				arrList.add(rs.getString(positionName));
+			}
+//			System.out.println(rs.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String[] returnArray = new String[arrList.size()];
+
+		for (int i = 0; i < arrList.size(); i++) {
+			returnArray[i] = arrList.get(i);
+		}
+
+		return returnArray;
+	}
+
+	public String[] getAllTeams() {
+		ResultSet rs;
+		ArrayList<String> arrList = new ArrayList<String>();
+		arrList.add("");
+		try {
+
+			String query = "SELECT T.[Name] AS 'Team Name' FROM Team T JOIN Coaches C on C.TeamID = T.ID JOIN Person P2 on P2.ID = C.CoachID WHERE P2.Username = ?";
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement(query);
+
+			stmt.setString(1, this.acct.getName());
+
+			rs = stmt.executeQuery();
+			int positionName = rs.findColumn("Team Name");
+			while (rs.next()) {
+				arrList.add(rs.getString(positionName));
+			}
+//			System.out.println(rs.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String[] returnArray = new String[arrList.size()];
+
+		for (int i = 0; i < arrList.size(); i++) {
+			returnArray[i] = arrList.get(i);
+		}
+
+		return returnArray;
+	}
+
 	public void showAddPlayer(JPanel masterPanel) {
+		this.positionSelectDropDownPlayer = new JComboBox<>(this.getAllPositions());
+		this.teamSelectDropDownPlayer = new JComboBox<>(this.getAllTeams());
+//		positionSelectDropDownPlayer.setMaximumSize(new Dimension(100,50));
+
 		addPlayerPanel.add(addPlayerToTeamLabel);
 		addPlayerPanel.setMaximumSize(new Dimension(400, 100));
-		
+
 		selectTeamPanelForPlayer.add(teamLabelForPlayer);
 		selectTeamPanelForPlayer.add(teamSelectDropDownPlayer);
 		selectTeamPanelForPlayer.setLayout(new BoxLayout(selectTeamPanelForPlayer, BoxLayout.X_AXIS));
 		addPlayerPanel.add(selectTeamPanelForPlayer);
-		
+
 		playerUsernamePanel.add(playerUsernameLabel);
 		playerUsernamePanel.add(playerUsernameField);
 		playerUsernamePanel.setLayout(new BoxLayout(playerUsernamePanel, BoxLayout.X_AXIS));
 		addPlayerPanel.add(playerUsernamePanel);
-		
+
 		playerPositionPanel.add(positionLabel);
-		playerPositionPanel.add(PositionSelectDropDownPlayer);
+		playerPositionPanel.add(positionSelectDropDownPlayer);
 		playerPositionPanel.setLayout(new BoxLayout(playerPositionPanel, BoxLayout.X_AXIS));
 		addPlayerPanel.add(playerPositionPanel);
-		
+
 		editPlayerButtonsPanel.add(addPlayerButton);
 		editPlayerButtonsPanel.add(editPlayerButton);
 		editPlayerButtonsPanel.add(deletePlayerButton);
 		editPlayerButtonsPanel.setLayout(new BoxLayout(editPlayerButtonsPanel, BoxLayout.X_AXIS));
 		addPlayerPanel.add(editPlayerButtonsPanel);
-		
+
 		masterPanel.add(addPlayerPanel);
 	}
-	
+
 	public void showAddCoach(JPanel masterPanel) {
+		this.teamSelectDropDownCoach = new JComboBox<>(this.getAllTeams());
 		addCoachPanel.add(addCoachToTeamLabel);
 		addCoachPanel.setMaximumSize(new Dimension(400, 100));
-		
+
 		selectTeamPanelForCoach.add(teamLabelForCoach);
 		selectTeamPanelForCoach.add(teamSelectDropDownCoach);
 		selectTeamPanelForCoach.setLayout(new BoxLayout(selectTeamPanelForCoach, BoxLayout.X_AXIS));
 		addCoachPanel.add(selectTeamPanelForCoach);
-		
+
 		coachUsernamePanel.add(coachUsernameLabel);
 		coachUsernamePanel.add(coachUsernameField);
 		coachUsernamePanel.setLayout(new BoxLayout(coachUsernamePanel, BoxLayout.X_AXIS));
 		addCoachPanel.add(coachUsernamePanel);
-		
-		
+
 		editCoachButtonsPanel.add(addCoachButton);
 		editCoachButtonsPanel.add(deleteCoachButton);
 		editCoachButtonsPanel.setLayout(new BoxLayout(editCoachButtonsPanel, BoxLayout.X_AXIS));
 		addCoachPanel.add(editCoachButtonsPanel);
-		
+
 		masterPanel.add(addCoachPanel);
 	}
-	
-	public JPanel show(){
+
+	public JPanel show() {
 		masterPanel = super.show();
 		namePanel.add(teamNameLabel);
 		namePanel.add(nameTF);
-		
+
 		leaguePanel.add(leagueLabel);
 		leaguePanel.add(leagueTF);
-		
+
 		masterPanel.add(createLabel, BorderLayout.NORTH);
 		masterPanel.add(namePanel, BorderLayout.NORTH);
 		masterPanel.add(leaguePanel, BorderLayout.NORTH);
@@ -182,12 +242,12 @@ public class TeamPage extends CoachDisplayPage {
 
 		this.showAddPlayer(masterPanel);
 		this.showAddCoach(masterPanel);
-		
+
 		frame.setVisible(true);
 		return null;
-		
+
 	}
-	
+
 	public void onSubmitButtonClick() {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
@@ -195,23 +255,59 @@ public class TeamPage extends CoachDisplayPage {
 				System.out.println("Clicked Submit");
 				String nameValue = nameTF.getText();
 				String leagueValue = leagueTF.getText();
-				
-				if(nameValue.equals("") || nameValue.isEmpty()) {
+
+				if (nameValue.equals("") || nameValue.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please Enter Team Name");
 					return;
 				}
-				
+
 				System.out.println(nameValue);
 				System.out.println(leagueValue);
-				int id = addTeam(nameValue,leagueValue);	
+				int id = addTeam(nameValue, leagueValue);
 				addCoaches(acct.getName(), id);
-								
+
 			}
 
 		});
 	}
 	
-	
+	public void onPlayerAddButtonClick() {
+		addPlayerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Add Player");
+				
+				String playerUsername = playerUsernameField.getText();
+				if (playerUsername.equals("") || playerUsername.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Player Username");
+					return;
+				}
+				
+
+				String teamSelection = (String) teamSelectDropDownPlayer.getSelectedItem();
+				if (teamSelection.equals("") || teamSelection.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Team");
+					return;
+				}
+				
+				String positionSelection = (String) positionSelectDropDownPlayer.getSelectedItem();
+				if (positionSelection.equals("") || positionSelection.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Position");
+					return;
+				}
+
+				
+				addPlaysOn(teamSelection, playerUsername, positionSelection);
+//				System.out.println(nameValue);
+//				System.out.println(leagueValue);
+//				int id = addTeam(nameValue, leagueValue);
+//				addCoaches(acct.getName(), id);
+
+			}
+
+		});
+	}
+
 	public int addTeam(String TeamName, String League) {
 		int returnValue = -1;
 		String mess = "";
@@ -226,22 +322,79 @@ public class TeamPage extends CoachDisplayPage {
 
 		} catch (SQLException e) {
 			System.out.println(e.toString());
-		
+
 		}
 		if (returnValue > 0) {
 			System.out.println("Success");
 			JOptionPane.showMessageDialog(null, "Team Added");
 			return returnValue;
 		} else {
-			if (returnValue <0) {
+			if (returnValue < 0) {
 				mess = "ERROR: Team name cannot be empty";
-			} 
+			}
 			System.out.println(returnValue);
 			JOptionPane.showMessageDialog(null, mess);
 			return returnValue;
 		}
 	}
 	
+	public int getTeamNameId(String teamName) {
+		ResultSet rs;
+		try {
+
+			String query = "SELECT Team.Id FROM Team Join Coaches ch on Team.Id = Ch.TeamId JOIN Person ON Person.Id = ch.CoachId WHERE Name = ?";
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement(query);
+
+			stmt.setString(1, teamName);
+
+			rs = stmt.executeQuery();
+			int teamId = rs.findColumn("Id");
+			while (rs.next()) {
+				return rs.getInt(teamId);
+			}
+//			System.out.println(rs.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public int addPlaysOn(String teamName, String playerUsername, String positionName) {
+		int returnValue = -1;
+		String mess = "";
+		try {
+			CallableStatement stmt = connection.getConnection().prepareCall("{? = call AddPlaysOn(?, ?, ?, ?, ?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setInt(2, getTeamNameId(teamName));
+			stmt.setString(3, playerUsername);
+			stmt.setString(4, positionName);
+
+			long millis = System.currentTimeMillis();
+			java.sql.Date date = new java.sql.Date(millis);
+
+			stmt.setDate(5, date);
+			stmt.setDate(6, null);
+			
+			stmt.execute();
+			returnValue = stmt.getInt(1);
+			System.out.println(returnValue);
+
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+
+		}
+		if (returnValue == 0) {
+			System.out.println("Success");
+			JOptionPane.showMessageDialog(null, playerUsername+" Added To " + teamName);
+			return returnValue;
+		} else {
+			mess = "ERROR: Enter Valid Player Data";
+			
+			System.out.println(returnValue);
+			JOptionPane.showMessageDialog(null, mess);
+			return returnValue;
+		}
+	}
 	public boolean addCoaches(String username, int teamID) {
 		System.out.println(teamID);
 		int returnValue = -1;
@@ -251,12 +404,12 @@ public class TeamPage extends CoachDisplayPage {
 			stmt.registerOutParameter(1, Types.INTEGER);
 			stmt.setString(2, username);
 			stmt.setInt(3, teamID);
-			
+
 			long millis = System.currentTimeMillis();
-			java.sql.Date date= new java.sql.Date(millis);
-		
-			stmt.setDate(4,date);
-			stmt.setDate(5,null);
+			java.sql.Date date = new java.sql.Date(millis);
+
+			stmt.setDate(4, date);
+			stmt.setDate(5, null);
 			stmt.execute();
 			returnValue = stmt.getInt(1);
 			System.out.println(returnValue);
@@ -264,9 +417,18 @@ public class TeamPage extends CoachDisplayPage {
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 			return false;
-		
+
 		}
 		return true;
+	}
+	
+	public void clear() {
+		this.selectTeamPanelForCoach.remove(teamSelectDropDownCoach);
+		this.selectTeamPanelForPlayer.remove(teamSelectDropDownPlayer);
+		this.playerPositionPanel.remove(positionSelectDropDownPlayer);
+		
+		frame.getContentPane().removeAll();
+		frame.repaint();
 	}
 
 }
