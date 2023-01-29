@@ -168,12 +168,14 @@ public class LoginPage extends AbstractPage {
 				System.out.println(typeValue);
 				acct.setName(usernameValue);
 				
-				clear();
+				
 
 				if (typeValue.equals("Player")) {
+					clear();
 					//switch the page
 				} else if (typeValue.equals("Coach")) {
 					//switch the page
+					clear();
 					homePage.show();
 				}
 

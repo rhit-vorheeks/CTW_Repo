@@ -42,6 +42,7 @@ public class UserService {
 					"SELECT Salt, Password, Type\nFROM [CTW_DB].[dbo].[Person]\nWhere Username = ?");
 			myStmt.setString(1, username);
 			ResultSet rs = myStmt.executeQuery();
+						
 			while (rs.next()) {
 				passsalt = rs.getBytes(rs.findColumn("Salt"));
 				passHash = rs.getString(rs.findColumn("Password"));
@@ -55,6 +56,8 @@ public class UserService {
 					return "";
 				}
 			}
+			
+			JOptionPane.showMessageDialog(null, "Please Register.");
 			//test
 
 		} catch (SQLException e) {
