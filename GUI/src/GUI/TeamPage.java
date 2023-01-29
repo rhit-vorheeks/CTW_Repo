@@ -65,10 +65,10 @@ public class TeamPage extends CoachDisplayPage {
 		leaguePanel.add( leagueLabel);
 		leaguePanel.add(leagueTF);
 		
-		masterPanel.add(createLabel, BorderLayout.SOUTH);
-		masterPanel.add(namePanel, BorderLayout.SOUTH);
-		masterPanel.add(leaguePanel, BorderLayout.SOUTH);
-		masterPanel.add(submitButton, BorderLayout.SOUTH);
+		masterPanel.add(createLabel, BorderLayout.NORTH);
+		masterPanel.add(namePanel, BorderLayout.NORTH);
+		masterPanel.add(leaguePanel, BorderLayout.NORTH);
+		masterPanel.add(submitButton, BorderLayout.NORTH);
 
 		frame.setVisible(true);
 		return null;

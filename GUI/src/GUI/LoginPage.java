@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
@@ -86,7 +87,8 @@ public class LoginPage extends AbstractPage {
 		usernameLabel = new JLabel(" Username: ");
 		passwordLabel = new JLabel("Password:  ");
 		usernameTextBox = new JTextField();
-		passwordTextBox = new JTextField();
+		passwordTextBox = new JPasswordField();
+		
 
 		// Setup Button
 		registerButton = new JButton("Register");
