@@ -12,6 +12,7 @@ import java.util.jar.Attributes.Name;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,7 +26,56 @@ public class TeamPage extends CoachDisplayPage {
 	JPanel namePanel = new JPanel();
 	JPanel leaguePanel =  new JPanel();
 	JPanel masterPanel = new JPanel();
+	
+	
+	// Panels for adding a player to a team
+	JPanel addPlayerPanel = new JPanel();
+	JPanel selectTeamPanelForPlayer = new JPanel();
+	JPanel playerUsernamePanel = new JPanel();
+	JPanel playerPositionPanel = new JPanel();
+	JPanel editPlayerButtonsPanel = new JPanel();
+	
+	// Panels for adding coach to a team
+	JPanel addCoachPanel = new JPanel();
+	JPanel selectTeamPanelForCoach = new JPanel();
+	JPanel coachUsernamePanel = new JPanel();
+	JPanel editCoachButtonsPanel = new JPanel();
+	
+	// Labels for adding player to a team
+	JLabel addPlayerToTeamLabel = new JLabel("Add Player To Team:");
+	JLabel teamLabelForPlayer = new JLabel("Team: ");
+	JLabel playerUsernameLabel = new JLabel("Player Username: ");
+	JLabel positionLabel = new JLabel("Position: ");
+	
+	// Labels for adding coach to team
+	JLabel addCoachToTeamLabel = new JLabel("Add Coach To Team:");
+	JLabel teamLabelForCoach = new JLabel("Team: ");
+	JLabel coachUsernameLabel = new JLabel("Coach Username: ");
+	
+	// Textfields for adding a player to a team
+	JTextField playerUsernameField = new JTextField();
+
+	// Textfields for adding a coach to a team
+	JTextField coachUsernameField = new JTextField();
+
+	// Dropdowns for adding a player to a team
+	JComboBox<String> teamSelectDropDownPlayer = new JComboBox<String>();
+	JComboBox<String> PositionSelectDropDownPlayer = new JComboBox<String>();
+
+	// Dropdowns for adding a coach to a team
+	JComboBox<String> teamSelectDropDownCoach = new JComboBox<String>();
+	
+	// Buttons for adding a player to a team
+	JButton addPlayerButton = new JButton("Add Player");
+	JButton editPlayerButton = new JButton("Update Position");
+	JButton deletePlayerButton = new JButton("Delete Player");
+	
+	// Buttons for adding a player to a team
+	JButton addCoachButton = new JButton("Add Coach");
+	JButton deleteCoachButton = new JButton("Delete Coach");
 		
+	
+	
 	JLabel createLabel = new JLabel("Add Team: ");
 	JLabel teamNameLabel = new JLabel("Team Name: ");
 	JLabel leagueLabel = new JLabel("League: ");
@@ -48,6 +98,16 @@ public class TeamPage extends CoachDisplayPage {
 		this.connection  = connection;
 		nameTF.setMaximumSize(new Dimension(100,50));
 		leagueTF.setMaximumSize(new Dimension(100,50));
+		playerUsernameField.setMaximumSize(new Dimension(100,50));
+		coachUsernameField.setMaximumSize(new Dimension(100,50));
+		
+		addPlayerPanel.setLayout(new BoxLayout(addPlayerPanel, BoxLayout.Y_AXIS));
+		addCoachPanel.setLayout(new BoxLayout(addCoachPanel, BoxLayout.Y_AXIS));
+		
+		teamSelectDropDownPlayer.setMaximumSize(new Dimension(100,50));
+		PositionSelectDropDownPlayer.setMaximumSize(new Dimension(100,50));
+		teamSelectDropDownCoach.setMaximumSize(new Dimension(100,50));
+		
 		
 		namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
 		leaguePanel.setLayout(new BoxLayout(leaguePanel, BoxLayout.X_AXIS));
@@ -56,13 +116,63 @@ public class TeamPage extends CoachDisplayPage {
 		onSubmitButtonClick();
 	}
 	
+	public void showAddPlayer(JPanel masterPanel) {
+		addPlayerPanel.add(addPlayerToTeamLabel);
+		addPlayerPanel.setMaximumSize(new Dimension(400, 100));
+		
+		selectTeamPanelForPlayer.add(teamLabelForPlayer);
+		selectTeamPanelForPlayer.add(teamSelectDropDownPlayer);
+		selectTeamPanelForPlayer.setLayout(new BoxLayout(selectTeamPanelForPlayer, BoxLayout.X_AXIS));
+		addPlayerPanel.add(selectTeamPanelForPlayer);
+		
+		playerUsernamePanel.add(playerUsernameLabel);
+		playerUsernamePanel.add(playerUsernameField);
+		playerUsernamePanel.setLayout(new BoxLayout(playerUsernamePanel, BoxLayout.X_AXIS));
+		addPlayerPanel.add(playerUsernamePanel);
+		
+		playerPositionPanel.add(positionLabel);
+		playerPositionPanel.add(PositionSelectDropDownPlayer);
+		playerPositionPanel.setLayout(new BoxLayout(playerPositionPanel, BoxLayout.X_AXIS));
+		addPlayerPanel.add(playerPositionPanel);
+		
+		editPlayerButtonsPanel.add(addPlayerButton);
+		editPlayerButtonsPanel.add(editPlayerButton);
+		editPlayerButtonsPanel.add(deletePlayerButton);
+		editPlayerButtonsPanel.setLayout(new BoxLayout(editPlayerButtonsPanel, BoxLayout.X_AXIS));
+		addPlayerPanel.add(editPlayerButtonsPanel);
+		
+		masterPanel.add(addPlayerPanel);
+	}
+	
+	public void showAddCoach(JPanel masterPanel) {
+		addCoachPanel.add(addCoachToTeamLabel);
+		addCoachPanel.setMaximumSize(new Dimension(400, 100));
+		
+		selectTeamPanelForCoach.add(teamLabelForCoach);
+		selectTeamPanelForCoach.add(teamSelectDropDownCoach);
+		selectTeamPanelForCoach.setLayout(new BoxLayout(selectTeamPanelForCoach, BoxLayout.X_AXIS));
+		addCoachPanel.add(selectTeamPanelForCoach);
+		
+		coachUsernamePanel.add(coachUsernameLabel);
+		coachUsernamePanel.add(coachUsernameField);
+		coachUsernamePanel.setLayout(new BoxLayout(coachUsernamePanel, BoxLayout.X_AXIS));
+		addCoachPanel.add(coachUsernamePanel);
+		
+		
+		editCoachButtonsPanel.add(addCoachButton);
+		editCoachButtonsPanel.add(deleteCoachButton);
+		editCoachButtonsPanel.setLayout(new BoxLayout(editCoachButtonsPanel, BoxLayout.X_AXIS));
+		addCoachPanel.add(editCoachButtonsPanel);
+		
+		masterPanel.add(addCoachPanel);
+	}
 	
 	public JPanel show(){
 		masterPanel = super.show();
 		namePanel.add(teamNameLabel);
 		namePanel.add(nameTF);
 		
-		leaguePanel.add( leagueLabel);
+		leaguePanel.add(leagueLabel);
 		leaguePanel.add(leagueTF);
 		
 		masterPanel.add(createLabel, BorderLayout.NORTH);
@@ -70,6 +180,9 @@ public class TeamPage extends CoachDisplayPage {
 		masterPanel.add(leaguePanel, BorderLayout.NORTH);
 		masterPanel.add(submitButton, BorderLayout.NORTH);
 
+		this.showAddPlayer(masterPanel);
+		this.showAddCoach(masterPanel);
+		
 		frame.setVisible(true);
 		return null;
 		
