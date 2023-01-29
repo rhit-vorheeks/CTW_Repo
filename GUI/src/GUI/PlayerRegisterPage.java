@@ -33,6 +33,7 @@ public class PlayerRegisterPage extends AbstractPage {
 	JPanel DOBPanel = new JPanel();
 	JPanel heightPanel = new JPanel();
 	JPanel weightPanel = new JPanel();
+	private JPanel buttonPanel = new JPanel();
 
 	// Label
 	JLabel promptLabel = new JLabel("Please enter Player Information:");
@@ -51,6 +52,7 @@ public class PlayerRegisterPage extends AbstractPage {
 
 	// Button
 	JButton registerButton = new JButton("Register");
+	JButton backButton = new JButton("Back");
 
 	// Data
 	String FNameValue = null;
@@ -63,6 +65,9 @@ public class PlayerRegisterPage extends AbstractPage {
 
 	private DatabaseConnectionService connection;
 	UserService userService = null;
+	
+	// Pages
+	private RegisterPage registerPage;
 
 	/**
 	 * Constructs a PlayerRegister page
@@ -83,8 +88,13 @@ public class PlayerRegisterPage extends AbstractPage {
 		userService = new UserService(this.connection);
 
 		onRegisterButtonClick();
+		this.onBackButtonClick();
 	}
 
+	public void savePages(RegisterPage regPage) {
+		this.registerPage = regPage;
+	}
+	
 	public void show() {
 		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
 
@@ -112,6 +122,10 @@ public class PlayerRegisterPage extends AbstractPage {
 		weightPanel.add(weightTF);
 		weightPanel.setLayout(new BoxLayout(weightPanel, BoxLayout.X_AXIS));
 
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(backButton);
+		buttonPanel.add(registerButton);
+
 		textPanel.add(promptLabel, BorderLayout.WEST);
 		textPanel.setMaximumSize(new Dimension(200, 50));
 
@@ -122,7 +136,7 @@ public class PlayerRegisterPage extends AbstractPage {
 		masterPanel.add(heightPanel, BorderLayout.CENTER);
 		masterPanel.add(weightPanel, BorderLayout.CENTER);
 
-		masterPanel.add(registerButton, BorderLayout.EAST);
+		masterPanel.add(buttonPanel, BorderLayout.EAST);
 
 		frame.add(masterPanel);
 
@@ -162,6 +176,21 @@ public class PlayerRegisterPage extends AbstractPage {
 		});
 
 	}
+	
+	public void onBackButtonClick() {
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("GO BACK");
+				clear();
+				registerPage.show();
+			
+			}
+
+		});
+
+	}
+
 
 	public void saveUserPass(String name, String pass) {
 		this.usernameValue = name;

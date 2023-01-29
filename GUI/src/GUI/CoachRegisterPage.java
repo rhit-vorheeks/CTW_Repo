@@ -10,6 +10,7 @@ import java.sql.Types;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,6 +31,7 @@ public class CoachRegisterPage extends AbstractPage {
 	private JPanel LNamePanel = new JPanel();
 	private JPanel DOBPanel = new JPanel();
 	private JPanel typePanel = new JPanel();
+	private JPanel buttonPanel = new JPanel();
 
 	// Labels
 	private JLabel promptLabel = new JLabel("Please enter Coach Information:");
@@ -42,10 +44,14 @@ public class CoachRegisterPage extends AbstractPage {
 	private JTextField firstNameTF = new JTextField();
 	private JTextField lastNameTF = new JTextField();
 	private JTextField DOBTF = new JTextField("MM-DD-YYYY");
-	private JTextField typeTF = new JTextField();
+	
+	// Drop Down
+	private String[] options = { "", "Head", "Assistant", "Other"};
+	private JComboBox<String> typeDrop;
 
 	// Button
 	JButton registerButton = new JButton("Register");
+	JButton backButton = new JButton("Back");
 
 	// Data
 	String FNameValue = null;
@@ -57,7 +63,10 @@ public class CoachRegisterPage extends AbstractPage {
 
 	private DatabaseConnectionService connection;
 	UserService userService = null;
+	
+	// Saved Pages
 	private CoachHomePage homePage = null;
+	private RegisterPage registerPage;
 
 	/**
 	 * Constructs a page that is used to register a coach.
@@ -68,7 +77,6 @@ public class CoachRegisterPage extends AbstractPage {
 		super(frame);
 		this.connection = connection;
 		userService = new UserService(this.connection);
-		onRegisterButtonClick();
 
 		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
 
@@ -76,13 +84,16 @@ public class CoachRegisterPage extends AbstractPage {
 		firstNameTF.setMaximumSize(TFSize);
 		lastNameTF.setMaximumSize(TFSize);
 		DOBTF.setMaximumSize(TFSize);
-		typeTF.setMaximumSize(TFSize);
+		this.typeDrop = new JComboBox<>(options);
+		typeDrop.setMaximumSize(TFSize);
+		this.onRegisterButtonClick();
+		this.onBackButtonClick();
 
 	}
 	
-	public void savePages(CoachHomePage coachHomePage) {
+	public void savePages(CoachHomePage coachHomePage, RegisterPage regPage) {
 		this.homePage  = coachHomePage;
-	
+		this.registerPage = regPage;
 	}
 
 	public void show() {
@@ -101,11 +112,16 @@ public class CoachRegisterPage extends AbstractPage {
 		DOBPanel.setLayout(new BoxLayout(DOBPanel, BoxLayout.X_AXIS));
 
 		typePanel.add(type);
-		typePanel.add(typeTF);
+		typePanel.add(typeDrop);
 		typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.X_AXIS));
+		
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 
 		textPanel.add(promptLabel, BorderLayout.WEST);
 		textPanel.setMaximumSize(new Dimension(200, 50));
+		
+		buttonPanel.add(backButton);
+		buttonPanel.add(registerButton);
 
 		masterPanel.add(textPanel, BorderLayout.CENTER);
 		masterPanel.add(FNamePanel, BorderLayout.CENTER);
@@ -113,7 +129,9 @@ public class CoachRegisterPage extends AbstractPage {
 		masterPanel.add(DOBPanel, BorderLayout.CENTER);
 		masterPanel.add(typePanel, BorderLayout.CENTER);
 
-		masterPanel.add(registerButton, BorderLayout.EAST);
+		masterPanel.add(buttonPanel, BorderLayout.CENTER);
+//		masterPanel.add(backButton);
+//		masterPanel.add(registerButton, BorderLayout.EAST);
 
 		frame.add(masterPanel);
 		frame.setVisible(true);
@@ -123,7 +141,8 @@ public class CoachRegisterPage extends AbstractPage {
 		FNameValue = firstNameTF.getText();
 		LNameValue = lastNameTF.getText();
 		DOBValue = DOBTF.getText();
-		typeValue = typeTF.getText();
+		typeValue = (String) typeDrop.getSelectedItem();
+//		typeValue = typeTF.getText();
 
 	}
 
@@ -142,6 +161,20 @@ public class CoachRegisterPage extends AbstractPage {
 					homePage.show();
 				}
 
+			}
+
+		});
+
+	}
+	
+	public void onBackButtonClick() {
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("GO BACK");
+				clear();
+				registerPage.show();
+			
 			}
 
 		});

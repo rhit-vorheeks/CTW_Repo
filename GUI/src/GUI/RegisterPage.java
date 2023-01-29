@@ -23,6 +23,7 @@ public class RegisterPage extends AbstractPage {
 	// Page References
 	private PlayerRegisterPage plrPage;
 	private CoachRegisterPage coachPage;
+	private LoginPage loginPage;
 
 	// Panels
 	private JPanel textPanel;
@@ -34,6 +35,7 @@ public class RegisterPage extends AbstractPage {
 
 	// Buttons
 	private JButton continueButton;
+	private JButton backButton;
 
 	// Dropdown Box
 	private String[] options = { "", "Player", "Coach" };
@@ -51,11 +53,9 @@ public class RegisterPage extends AbstractPage {
 	 * 
 	 * @param frame, plrPage, coachPage
 	 */
-	public RegisterPage(JFrame frame, PlayerRegisterPage plrPage, CoachRegisterPage coachPage) {
+	public RegisterPage(JFrame frame) {
 		super(frame);
 
-		this.coachPage = coachPage;
-		this.plrPage = plrPage;
 
 		// Panels
 		this.textPanel = new JPanel();
@@ -67,6 +67,7 @@ public class RegisterPage extends AbstractPage {
 
 		// Buttons
 		this.continueButton = new JButton("Continue");
+		this.backButton = new JButton("Back");
 
 		// Dropdown Box
 		String[] options = { "", "Player", "Coach" };
@@ -76,8 +77,16 @@ public class RegisterPage extends AbstractPage {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.onContinueButtonClick();
+		this.onBackButtonClick();
 	}
 
+	public void savePages(PlayerRegisterPage plrPage, CoachRegisterPage coachPage, LoginPage loginPage) {
+		this.coachPage = coachPage;
+		this.plrPage = plrPage;
+		this.loginPage = loginPage;
+		
+	}
+	
 	public void show() {
 		JFrame frame = this.getFrame();
 
@@ -85,6 +94,7 @@ public class RegisterPage extends AbstractPage {
 		textPanel.add(drop, BorderLayout.CENTER);
 		textPanel.setMaximumSize(new Dimension(900, 300));
 
+		dropDownPanel.add(backButton, BorderLayout.NORTH);
 		dropDownPanel.add(continueButton, BorderLayout.NORTH);
 
 		masterPanel.add(textPanel, BorderLayout.SOUTH);
@@ -123,6 +133,20 @@ public class RegisterPage extends AbstractPage {
 
 	}
 
+	public void onBackButtonClick() {
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("GO BACK");
+				clear();
+				loginPage.show();
+			
+			}
+
+		});
+
+	}
+	
 	public void saveUserPass(String name, String pass) {
 		this.usernameValue = name;
 		this.passwordValue = pass;
