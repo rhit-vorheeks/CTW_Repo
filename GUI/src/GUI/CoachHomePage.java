@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.beans.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -27,14 +28,16 @@ public class CoachHomePage extends CoachDisplayPage {
 	JTable rosterTable = new JTable();
 
 	JFrame frame = null;
+	JTable table = null;
 	private DatabaseConnectionService dbService = null;
 
-//	private AccountHandler acct;
+	private AccountHandler acct;
 
-	public CoachHomePage(JFrame frame, DatabaseConnectionService connection) {
+	public CoachHomePage(JFrame frame, DatabaseConnectionService connection, AccountHandler acct) {
 		super(frame);
 		this.frame = frame;
 		this.dbService = connection;
+		this.acct = acct;
 
 		rosterPanel.setLayout(new BoxLayout(rosterPanel, BoxLayout.X_AXIS));
 		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
@@ -44,27 +47,34 @@ public class CoachHomePage extends CoachDisplayPage {
 		masterPanel = super.show();
 		rosterPanel.add(rosterLabel);
 		rosterPanel.add(rosterTable);
-		rosterPanel.add(getTable());
+		if (table == null) {
+			getTable();
+		}
+		rosterPanel.add(table);
 		masterPanel.add(rosterPanel, BorderLayout.NORTH);
 		frame.setVisible(true);
 		return null;
 
 	}
 
-	public JTable getTable() {
+	public void getTable() {
 
 		ResultSet rs;
-		JTable table = null;
 		try {
-			java.sql.Statement stmt = this.dbService.getConnection().createStatement();
-			String query = "";
-			rs = stmt.executeQuery(query);
+			String query = "SELECT T.[Name] AS 'Team Name', P.FName AS 'First Name', P.Lname AS 'Last Name', P.Username as 'Username', PO.PositionName as 'Position'\r\n"
+					+ "FROM Team T Join PlaysOn PO on T.ID = PO.TeamID\r\n" + "JOIN Person P on P.ID = PO.PlayerID\r\n"
+					+ "JOIN Coaches C on C.TeamID = T.ID \r\n" + "JOIN Person P2 on P2.ID = C.CoachID\r\n"
+					+ "WHERE P2.Username = ?\r\n"
+					+ "GROUP BY T.[Name], P.Lname, P.FName, P.Username, PO.PositionName";
+			PreparedStatement stmt = this.dbService.getConnection().prepareStatement(query);
+			stmt.setString(1, this.acct.getName());
+			rs = stmt.executeQuery();
+			System.out.println(rs.toString());
 			table = new JTable(buildTableModel(rs));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return table;
+
 
 	}
 
@@ -91,6 +101,18 @@ public class CoachHomePage extends CoachDisplayPage {
 
 		return new DefaultTableModel(data, columnNames);
 
+	}
+
+	public void clear() {
+		frame.getContentPane().removeAll();
+		frame.repaint();
+	}
+
+	public void refreshTable() {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
+		rosterPanel.remove(table);
+		getTable();
 	}
 
 }

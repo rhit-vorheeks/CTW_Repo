@@ -128,6 +128,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Home");
 				clear();
+				homePage.refreshTable();
 				homePage.show();
 			}
 
