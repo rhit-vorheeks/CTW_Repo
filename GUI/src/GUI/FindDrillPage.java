@@ -150,7 +150,6 @@ public class FindDrillPage extends CoachDisplayPage {
 			Vector<Object> vector = new Vector<Object>();
 			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
 				vector.add(rs.getObject(columnIndex));
-				System.out.println(rs.getObject(columnIndex));
 			}
 			data.add(vector);
 		}
@@ -159,10 +158,6 @@ public class FindDrillPage extends CoachDisplayPage {
 
 	}
 	
-//	public void clear() {
-//		frame.getContentPane().removeAll();
-//		frame.repaint();
-//	}
 
 	public void refreshTable(String selection) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
