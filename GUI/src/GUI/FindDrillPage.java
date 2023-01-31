@@ -53,7 +53,7 @@ public class FindDrillPage extends CoachDisplayPage {
 	}
 
 	public JPanel show() {
-
+		masterPanel = super.show();
 		selectPanel.add(targetStatLabel);
 		selectPanel.add(dropDown);
 		selectPanel.add(submitButton);

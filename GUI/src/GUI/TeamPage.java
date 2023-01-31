@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.plaf.DimensionUIResource;
+
 import java.util.*;
 
 public class TeamPage extends CoachDisplayPage {
@@ -95,17 +98,17 @@ public class TeamPage extends CoachDisplayPage {
 		this.acct = acct;
 		this.frame = frame;
 		this.connection = connection;
-		nameTF.setMaximumSize(new Dimension(100, 50));
-		leagueTF.setMaximumSize(new Dimension(100, 50));
+		nameTF.setMaximumSize(new Dimension(100, 25));
+		leagueTF.setMaximumSize(new Dimension(100, 25));
 		playerUsernameField.setMaximumSize(new Dimension(100, 50));
 		coachUsernameField.setMaximumSize(new Dimension(100, 50));
+		teamSelectDropDownCoach.setMaximumSize(new Dimension(100,25));
 
 		addPlayerPanel.setLayout(new BoxLayout(addPlayerPanel, BoxLayout.Y_AXIS));
 		addCoachPanel.setLayout(new BoxLayout(addCoachPanel, BoxLayout.Y_AXIS));
 
-//		teamSelectDropDownPlayer.setMaximumSize(new Dimension(100,50));
-//		positionSelectDropDownPlayer.setMaximumSize(new Dimension(150,75));
-//		teamSelectDropDownCoach.setMaximumSize(new Dimension(100,50));
+//		teamSelectDropDownPlayer.setPreferredSize(new Dimension(150,25));
+//		positionSelectDropDownPlayer.setMaximumSize(new Dimension(150,25));
 
 		namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
 		leaguePanel.setLayout(new BoxLayout(leaguePanel, BoxLayout.X_AXIS));
@@ -182,7 +185,10 @@ public class TeamPage extends CoachDisplayPage {
 
 		selectTeamPanelForPlayer.add(teamLabelForPlayer);
 		selectTeamPanelForPlayer.add(teamSelectDropDownPlayer);
+		selectTeamPanelForPlayer.setMaximumSize(new Dimension(700,25));
 		selectTeamPanelForPlayer.setLayout(new BoxLayout(selectTeamPanelForPlayer, BoxLayout.X_AXIS));
+//		selectTeamPanelForPlayer.setBackground(Color.red);
+
 		addPlayerPanel.add(selectTeamPanelForPlayer);
 
 		playerUsernamePanel.add(playerUsernameLabel);
@@ -192,14 +198,19 @@ public class TeamPage extends CoachDisplayPage {
 
 		playerPositionPanel.add(positionLabel);
 		playerPositionPanel.add(positionSelectDropDownPlayer);
+//		playerPositionPanel.setBackground(Color.GREEN);
+		playerPositionPanel.setMaximumSize(new Dimension(700,25));
 		playerPositionPanel.setLayout(new BoxLayout(playerPositionPanel, BoxLayout.X_AXIS));
+		
 		addPlayerPanel.add(playerPositionPanel);
 
 		editPlayerButtonsPanel.add(addPlayerButton);
 		editPlayerButtonsPanel.add(editPlayerButton);
 		editPlayerButtonsPanel.add(deletePlayerButton);
+		editPlayerButtonsPanel.setMaximumSize(new Dimension(700,25));
 		editPlayerButtonsPanel.setLayout(new BoxLayout(editPlayerButtonsPanel, BoxLayout.X_AXIS));
 		addPlayerPanel.add(editPlayerButtonsPanel);
+		addPlayerPanel.setMaximumSize(new Dimension(700,200));
 
 		masterPanel.add(addPlayerPanel);
 	}
@@ -211,6 +222,7 @@ public class TeamPage extends CoachDisplayPage {
 
 		selectTeamPanelForCoach.add(teamLabelForCoach);
 		selectTeamPanelForCoach.add(teamSelectDropDownCoach);
+		selectTeamPanelForCoach.setMaximumSize(new Dimension(700,25));
 		selectTeamPanelForCoach.setLayout(new BoxLayout(selectTeamPanelForCoach, BoxLayout.X_AXIS));
 		addCoachPanel.add(selectTeamPanelForCoach);
 
@@ -234,7 +246,12 @@ public class TeamPage extends CoachDisplayPage {
 
 		leaguePanel.add(leagueLabel);
 		leaguePanel.add(leagueTF);
-
+		
+//		namePanel.setBackground(Color.red);
+//		createPanel.setBackground(Color.GREEN);
+//		selectTeamPanelForCoach.setBackground(Color.BLUE);
+		selectTeamPanelForCoach.setMaximumSize(new Dimension(700, 200));
+		
 		masterPanel.add(createLabel, BorderLayout.NORTH);
 		masterPanel.add(namePanel, BorderLayout.NORTH);
 		masterPanel.add(leaguePanel, BorderLayout.NORTH);

@@ -2,10 +2,19 @@ USE CTW_DB
 GO
 
 create Proc GetDrill
-	@drillName varchar(50)
+	@statName varchar(50)
 
 AS
 
 BEGIN
-SELECT [Name], [Description] from Drill where [Name] = @drillName;
+
+IF (@statName = 'All') Begin 
+	Select [Name], [Description]  from Drill;
+end 
+else begin 
+SELECT [Name], [Description] from Drill
+Join Targets on Drill.ID = Targets.DrillID 
+Where Targets.StatName = @statName
+end 
+return 0;
 END
