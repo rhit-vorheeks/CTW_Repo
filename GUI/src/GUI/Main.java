@@ -26,7 +26,7 @@ public class Main {
 		LoginPage lgpage = new LoginPage(frame, regPage, connection, acct);
 		TeamPage teamPage = new TeamPage(frame, connection, acct);
 		CoachHomePage coachHomePage = new CoachHomePage(frame, connection, acct);
-		FindDrillPage findDrillPage = new FindDrillPage(frame);
+		FindDrillPage findDrillPage = new FindDrillPage(frame, connection);
 		FindPlayerStatPage findPlayerStatPage =  new FindPlayerStatPage(frame);
 		
 		// Program Pages
