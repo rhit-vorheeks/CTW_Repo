@@ -72,7 +72,7 @@ public class TeamPage extends CoachDisplayPage {
 
 	// Buttons for adding a player to a team
 	JButton addPlayerButton = new JButton("Add Player");
-	JButton editPlayerButton = new JButton("Update Position");
+//	JButton editPlayerButton = new JButton("Update Position");
 	JButton deletePlayerButton = new JButton("Delete Player");
 
 	// Buttons for adding a player to a team
@@ -117,6 +117,7 @@ public class TeamPage extends CoachDisplayPage {
 		this.onPlayerAddButtonClick();
 
 		onSubmitButtonClick();
+		onPlayerDeleteButtonClick();
 	}
 
 	public String[] getAllPositions() {
@@ -205,7 +206,7 @@ public class TeamPage extends CoachDisplayPage {
 		addPlayerPanel.add(playerPositionPanel);
 
 		editPlayerButtonsPanel.add(addPlayerButton);
-		editPlayerButtonsPanel.add(editPlayerButton);
+//		editPlayerButtonsPanel.add(editPlayerButton);
 		editPlayerButtonsPanel.add(deletePlayerButton);
 		editPlayerButtonsPanel.setMaximumSize(new Dimension(700,25));
 		editPlayerButtonsPanel.setLayout(new BoxLayout(editPlayerButtonsPanel, BoxLayout.X_AXIS));
@@ -324,7 +325,49 @@ public class TeamPage extends CoachDisplayPage {
 
 		});
 	}
+	
+	
+	//deletePlayerButton
+	
+	public void onPlayerDeleteButtonClick() {
+		deletePlayerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Delete Player");
+				
+				String playerUsername = playerUsernameField.getText();
+				if (playerUsername.equals("") || playerUsername.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Player Username");
+					return;
+				}
+				
 
+				String teamSelection = (String) teamSelectDropDownPlayer.getSelectedItem();
+				if (teamSelection.equals("") || teamSelection.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Team");
+					return;
+				}
+				
+				String positionSelection = (String) positionSelectDropDownPlayer.getSelectedItem();
+				if (positionSelection.equals("") || positionSelection.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Position");
+					return;
+				}
+
+				
+				deletePlaysOn(teamSelection, playerUsername, positionSelection);
+//				System.out.println(nameValue);
+//				System.out.println(leagueValue);
+//				int id = addTeam(nameValue, leagueValue);
+//				addCoaches(acct.getName(), id);
+
+			}
+
+		});
+	}
+
+
+	
 	public int addTeam(String TeamName, String League) {
 		int returnValue = -1;
 		String mess = "";
@@ -375,6 +418,38 @@ public class TeamPage extends CoachDisplayPage {
 		}
 		return -1;
 	}
+	
+	
+	public int deletePlaysOn(String teamName, String playerUsername, String positionName) {
+		int returnValue = -1;
+		String mess = "";
+		try {
+			CallableStatement stmt = connection.getConnection().prepareCall("{? = call SetPlaysOnEndDate(?, ?, ?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setInt(2, getTeamNameId(teamName));
+			stmt.setString(3, playerUsername);
+			stmt.setString(4, positionName);		
+			stmt.execute();
+			returnValue = stmt.getInt(1);
+			System.out.println(returnValue);
+
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+
+		}
+		if (returnValue == 0) {
+			System.out.println("Success");
+			JOptionPane.showMessageDialog(null, playerUsername+" quit "+ positionName +" on " + teamName);
+			return returnValue;
+		} else {
+			mess = "ERROR: Enter Valid Player Data";
+			
+			System.out.println(returnValue);
+			JOptionPane.showMessageDialog(null, mess);
+			return returnValue;
+		}
+	}
+	
 	
 	public int addPlaysOn(String teamName, String playerUsername, String positionName) {
 		int returnValue = -1;
@@ -430,6 +505,28 @@ public class TeamPage extends CoachDisplayPage {
 			stmt.execute();
 			returnValue = stmt.getInt(1);
 			System.out.println(returnValue);
+
+		} catch (SQLException e) {
+			System.out.println(e.toString());
+			return false;
+
+		}
+		return true;
+	}
+	
+	public boolean removeCoaches(String username, int teamID) {
+		System.out.println(teamID);
+		int returnValue = -1;
+		try {
+			CallableStatement stmt = connection.getConnection().prepareCall("{? = call SetCoachesEndDate(?, ?)}");
+			stmt.registerOutParameter(1, Types.INTEGER);
+			stmt.setString(2, username);
+			stmt.setInt(3, teamID);
+			stmt.execute();
+			returnValue = stmt.getInt(1);
+			System.out.println(returnValue);
+			JOptionPane.showMessageDialog(null, username+" quit the team.");
+
 
 		} catch (SQLException e) {
 			System.out.println(e.toString());

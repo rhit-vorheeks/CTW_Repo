@@ -1,6 +1,8 @@
 package GUI;
 
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 /**
  * Abstract Page used for methods that apply to all pages.
@@ -40,6 +42,18 @@ public abstract class AbstractPage {
 		frame.getContentPane().removeAll();
 		frame.repaint();
 	}
+	
+	/**
+	 * Wraps text
+	 * @param i
+	 * @param table
+	 */
+	public void wrapCol(int i, JTable table) {
+		TableColumn column = table.getColumnModel().getColumn(i);
+		column.setCellRenderer(new TextAreaRenderer());
+		table.setRowHeight(0, 100);
+	}
+
 	
 //	/**
 //	 * Shows the contents on the page's frame.

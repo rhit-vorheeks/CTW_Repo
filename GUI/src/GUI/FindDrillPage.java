@@ -20,8 +20,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class FindDrillPage extends CoachDisplayPage {
 
@@ -53,6 +55,8 @@ public class FindDrillPage extends CoachDisplayPage {
 	}
 
 	public JPanel show() {
+		drillPanel.removeAll();
+		
 		masterPanel = super.show();
 		selectPanel.add(targetStatLabel);
 		selectPanel.add(dropDown);
@@ -65,8 +69,12 @@ public class FindDrillPage extends CoachDisplayPage {
 		if(table == null) {
 			getTable("All");
 		}
+		
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			wrapCol(i, table);
+		}
 
-		drillPanel.add(table);
+		drillPanel.add(new JScrollPane(table));
 		frame.add(masterPanel);
 		frame.setVisible(true);
 		
@@ -106,6 +114,7 @@ public class FindDrillPage extends CoachDisplayPage {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Submit");
 				String selection = (String) dropDown.getSelectedItem();
+				
 				refreshTable(selection);
 				
 
@@ -160,12 +169,16 @@ public class FindDrillPage extends CoachDisplayPage {
 	
 
 	public void refreshTable(String selection) {
+//		drillPanel.remove(table);
+		drillPanel.removeAll();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
-		drillPanel.remove(table);
 		getTable(selection);
-		drillPanel.add(table);
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			wrapCol(i, table);
+		}
+		drillPanel.add(new JScrollPane(table));
 		frame.setVisible(true);
 	}
-	
+		
 }

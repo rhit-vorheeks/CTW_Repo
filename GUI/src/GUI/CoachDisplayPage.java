@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.TableColumn;
 
 public abstract class CoachDisplayPage extends AbstractPage{
 
@@ -137,7 +138,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Home");
 				clear();
-				homePage.refreshTable();
+//				homePage.refreshTable();
 				homePage.show();
 			}
 
@@ -145,6 +146,5 @@ public abstract class CoachDisplayPage extends AbstractPage{
 	}
 	
 
-	
 	
 }
