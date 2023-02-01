@@ -65,20 +65,19 @@ public class CoachHomePage extends CoachDisplayPage {
 
 	public JPanel show() {
 		rosterPanel.removeAll();
+		
 		masterPanel = super.show();
 		rosterPanel.add(rosterLabel, BorderLayout.WEST);
 		rosterPanel.add(rosterTable);
-		if (table == null) {
-			table = getTable(rosterquery, table);
-			table.setMaximumSize(new Dimension(800, 600));
 
-		}
+		table = getTable(rosterquery, table);
+		table.setMaximumSize(new Dimension(800, 600));
 
-		if (coachTable == null) {
-			coachTable = getTable(coachquery, coachTable);
-			coachTable.setMaximumSize(new Dimension(800, 600));
 
-		}
+		coachTable = getTable(coachquery, coachTable);
+		coachTable.setMaximumSize(new Dimension(800, 600));
+
+
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			wrapCol(i, table);
@@ -87,6 +86,8 @@ public class CoachHomePage extends CoachDisplayPage {
 		for (int i = 0; i < coachTable.getColumnCount(); i++) {
 			wrapCol(i, coachTable);
 		}
+
+
 		rosterPanel.add(new JScrollPane(table));
 		rosterPanel.add(new JScrollPane(coachTable));
 		masterPanel.add(rosterPanel, BorderLayout.NORTH);

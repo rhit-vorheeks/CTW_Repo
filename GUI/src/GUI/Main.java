@@ -27,7 +27,7 @@ public class Main {
 		TeamPage teamPage = new TeamPage(frame, connection, acct);
 		CoachHomePage coachHomePage = new CoachHomePage(frame, connection, acct);
 		FindDrillPage findDrillPage = new FindDrillPage(frame, connection);
-		FindPlayerStatPage findPlayerStatPage =  new FindPlayerStatPage(frame);
+		FindPlayerStatPage findPlayerStatPage =  new FindPlayerStatPage(frame, connection, acct);
 		
 		// Program Pages
 		teamPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);

@@ -73,11 +73,11 @@ public class TeamPage extends CoachDisplayPage {
 	// Buttons for adding a player to a team
 	JButton addPlayerButton = new JButton("Add Player");
 //	JButton editPlayerButton = new JButton("Update Position");
-	JButton deletePlayerButton = new JButton("Delete Player");
+	JButton deletePlayerButton = new JButton("Retire Player");
 
 	// Buttons for adding a player to a team
 	JButton addCoachButton = new JButton("Add Coach");
-	JButton deleteCoachButton = new JButton("Delete Coach");
+	JButton deleteCoachButton = new JButton("Retire Coach");
 
 	JLabel createLabel = new JLabel("Add Team: ");
 	JLabel teamNameLabel = new JLabel("Team Name: ");
@@ -98,10 +98,11 @@ public class TeamPage extends CoachDisplayPage {
 		this.acct = acct;
 		this.frame = frame;
 		this.connection = connection;
-		nameTF.setMaximumSize(new Dimension(100, 25));
-		leagueTF.setMaximumSize(new Dimension(100, 25));
-		playerUsernameField.setMaximumSize(new Dimension(100, 50));
-		coachUsernameField.setMaximumSize(new Dimension(100, 50));
+		createPanel.setMaximumSize(new Dimension(200, 300));
+		nameTF.setMaximumSize(new Dimension(150, 25));
+		leagueTF.setMaximumSize(new Dimension(150, 25));
+		playerUsernameField.setMaximumSize(new Dimension(150, 25));
+		coachUsernameField.setMaximumSize(new Dimension(150, 25));
 		teamSelectDropDownCoach.setMaximumSize(new Dimension(100,25));
 
 		addPlayerPanel.setLayout(new BoxLayout(addPlayerPanel, BoxLayout.Y_AXIS));
@@ -113,11 +114,14 @@ public class TeamPage extends CoachDisplayPage {
 		namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
 		leaguePanel.setLayout(new BoxLayout(leaguePanel, BoxLayout.X_AXIS));
 		masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
-		
-		this.onPlayerAddButtonClick();
 
 		onSubmitButtonClick();
+		
+		onPlayerAddButtonClick();
 		onPlayerDeleteButtonClick();
+		
+		onCoachAddButtonClick();
+		onCoachDeleteButtonClick();
 	}
 
 	public String[] getAllPositions() {
@@ -153,7 +157,7 @@ public class TeamPage extends CoachDisplayPage {
 		arrList.add("");
 		try {
 
-			String query = "SELECT T.[Name] AS 'Team Name' FROM Team T JOIN Coaches C on C.TeamID = T.ID JOIN Person P2 on P2.ID = C.CoachID WHERE P2.Username = ?";
+			String query = "SELECT T.[Name] AS 'Team Name' FROM Team T JOIN Coaches C on C.TeamID = T.ID JOIN Person P2 on P2.ID = C.CoachID WHERE P2.Username = ? AND C.EndDate is NULL";
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(query);
 
 			stmt.setString(1, this.acct.getName());
@@ -281,8 +285,14 @@ public class TeamPage extends CoachDisplayPage {
 
 				System.out.println(nameValue);
 				System.out.println(leagueValue);
-				int id = addTeam(nameValue, leagueValue);
-				addCoaches(acct.getName(), id);
+				
+				addTeam(nameValue, leagueValue);
+				
+				clear();
+				show();
+				
+//				int id = addTeam(nameValue, leagueValue);
+//				addCoaches(acct.getName(), id);
 
 			}
 
@@ -316,6 +326,9 @@ public class TeamPage extends CoachDisplayPage {
 
 				
 				addPlaysOn(teamSelection, playerUsername, positionSelection);
+				
+				clear();
+				show();
 //				System.out.println(nameValue);
 //				System.out.println(leagueValue);
 //				int id = addTeam(nameValue, leagueValue);
@@ -356,6 +369,44 @@ public class TeamPage extends CoachDisplayPage {
 
 				
 				deletePlaysOn(teamSelection, playerUsername, positionSelection);
+				
+				clear();
+				show();
+//				System.out.println(nameValue);
+//				System.out.println(leagueValue);
+//				int id = addTeam(nameValue, leagueValue);
+//				addCoaches(acct.getName(), id);
+
+			}
+
+		});
+	}
+	
+	public void onCoachAddButtonClick() {
+		addCoachButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Add Coach");
+				
+				String playerUsername = coachUsernameField.getText();
+				if (playerUsername.equals("") || playerUsername.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Coach Username");
+					return;
+				}
+				
+
+				String teamSelection = (String) teamSelectDropDownCoach.getSelectedItem();
+				if (teamSelection.equals("") || teamSelection.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Team");
+					return;
+				}
+				
+				int teamId = getTeamNameId(teamSelection);
+				
+				addCoaches(playerUsername, teamId);
+				
+				clear();
+				show();
 //				System.out.println(nameValue);
 //				System.out.println(leagueValue);
 //				int id = addTeam(nameValue, leagueValue);
@@ -367,15 +418,51 @@ public class TeamPage extends CoachDisplayPage {
 	}
 
 
+	public void onCoachDeleteButtonClick() {
+		deleteCoachButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Delete Coach");
+				
+				String playerUsername = coachUsernameField.getText();
+				if (playerUsername.equals("") || playerUsername.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Coach Username");
+					return;
+				}
+				
+
+				String teamSelection = (String) teamSelectDropDownCoach.getSelectedItem();
+				if (teamSelection.equals("") || teamSelection.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please Enter Team");
+					return;
+				}
+				
+				int teamId = getTeamNameId(teamSelection);
+				
+				removeCoaches(playerUsername, teamId);
+				
+				clear();
+				show();
+//				System.out.println(nameValue);
+//				System.out.println(leagueValue);
+//				int id = addTeam(nameValue, leagueValue);
+//				addCoaches(acct.getName(), id);
+
+			}
+
+		});
+	}
+
 	
 	public int addTeam(String TeamName, String League) {
 		int returnValue = -1;
 		String mess = "";
 		try {
-			CallableStatement stmt = connection.getConnection().prepareCall("{? = call AddTeam(?, ?)}");
+			CallableStatement stmt = connection.getConnection().prepareCall("{? = call CoachAddsTeam(?, ?, ?)}");
 			stmt.registerOutParameter(1, Types.INTEGER);
-			stmt.setString(2, TeamName);
-			stmt.setString(3, League);
+			stmt.setString(2, this.acct.getName());
+			stmt.setString(3, TeamName);
+			stmt.setString(4, League);
 			stmt.execute();
 			returnValue = stmt.getInt(1);
 			System.out.println(returnValue);
@@ -384,14 +471,12 @@ public class TeamPage extends CoachDisplayPage {
 			System.out.println(e.toString());
 
 		}
-		if (returnValue > 0) {
+		if (returnValue == 0) {
 			System.out.println("Success");
 			JOptionPane.showMessageDialog(null, "Team Added");
 			return returnValue;
 		} else {
-			if (returnValue < 0) {
-				mess = "ERROR: Team name cannot be empty";
-			}
+			mess = "ERROR: Invalid team";
 			System.out.println(returnValue);
 			JOptionPane.showMessageDialog(null, mess);
 			return returnValue;
