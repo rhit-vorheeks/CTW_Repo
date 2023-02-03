@@ -69,6 +69,8 @@ public class PlayerRegisterPage extends AbstractPage {
 	// Pages
 	private RegisterPage registerPage;
 
+	private PlayerHomePage playerHomePage;
+
 	/**
 	 * Constructs a PlayerRegister page
 	 * 
@@ -91,8 +93,9 @@ public class PlayerRegisterPage extends AbstractPage {
 		this.onBackButtonClick();
 	}
 
-	public void savePages(RegisterPage regPage) {
+	public void savePages(RegisterPage regPage, PlayerHomePage playerHomePage ) {
 		this.registerPage = regPage;
+		this.playerHomePage = playerHomePage;
 	}
 	
 	public void show() {
@@ -168,6 +171,8 @@ public class PlayerRegisterPage extends AbstractPage {
 						"Player")) {
 					addPlayer(usernameValue, heightValue, weightValue);
 					clear();
+					playerHomePage.show();
+					
 					
 				}
 
@@ -184,7 +189,7 @@ public class PlayerRegisterPage extends AbstractPage {
 				System.out.println("GO BACK");
 				clear();
 				registerPage.show();
-			
+				
 			}
 
 		});

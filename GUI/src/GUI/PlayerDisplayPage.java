@@ -32,10 +32,8 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 
 		
 		//Pages 
-		private CoachHomePage homePage = null;
-		private FindDrillPage findDrillPage = null;
-		private FindPlayerStatPage findPlayerStatPage = null;
-		private TeamPage teamPage = null;
+		private PlayerFindDrillPage findDrillPage = null;
+		private PlayerHomePage playerHomePage;
 		
 		
 	public PlayerDisplayPage(JFrame frame){
@@ -68,31 +66,24 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 	public JPanel show() {
 		JFrame frame = this.getFrame();
 
-		buttonPanel.add(HomeButton, BorderLayout.NORTH);
-		buttonPanel.add(FindDrillButton, BorderLayout.NORTH);
-		buttonPanel.add(AddPlayerStatButton, BorderLayout.NORTH);
-		buttonPanel.add(UserButton, BorderLayout.NORTH);
+		buttonPanel.add(HomeButton, BorderLayout.CENTER);
+		buttonPanel.add(FindDrillButton, BorderLayout.CENTER);
+		buttonPanel.add(AddPlayerStatButton, BorderLayout.CENTER);
+		buttonPanel.add(UserButton, BorderLayout.CENTER);
 
-		buttonPanel.setMaximumSize(new Dimension(700, 100));
-//		textPanel.setMaximumSize(new Dimension(1400, 100));
-//		buttonPanel.setBackground(Color.red);
-		masterPanel.add(buttonPanel, BorderLayout.CENTER);
-//		masterPanel.add(textPanel, BorderLayout.NORTH);
-//		textPanel.setBackground(Color.CYAN);
-//		masterPanel.setBackground(Color.green);
+		buttonPanel.setMaximumSize(new Dimension(1400, 100));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
+		masterPanel.add(buttonPanel, BorderLayout.CENTER);
 
 		frame.add(masterPanel);
-
 		frame.setVisible(true);
 		return masterPanel;
 	}
 	
-	public void savePages(TeamPage teamPage, FindDrillPage findDrillPage, FindPlayerStatPage findPlayerStatPage, CoachHomePage coachHomePage) {
-		this.teamPage = teamPage;
+	public void savePages(PlayerHomePage playerHomePage, PlayerFindDrillPage findDrillPage) {
+		this.playerHomePage = playerHomePage;
 		this.findDrillPage = findDrillPage;
-		this.findPlayerStatPage = findPlayerStatPage;
-		this.homePage = coachHomePage;
 	
 	}
 	
@@ -115,8 +106,8 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Find Drill");
-//				clear();
-//				findDrillPage.show();
+				clear();
+				findDrillPage.show();
 			}
 
 		});
@@ -139,9 +130,9 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Home");
-//				clear();
-//				homePage.refreshTable();
-//				homePage.show();
+				clear();
+//				playerHomePage.refreshTable();
+				playerHomePage.show();
 			}
 
 		});

@@ -35,11 +35,20 @@ public class Main {
 		findDrillPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
 		findPlayerStatPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
 		
+		//Player Pages 
+		PlayerFindDrillPage playerfindDrillPage = new PlayerFindDrillPage(frame, connection);
+		PlayerHomePage playerHome = new PlayerHomePage(frame, connection, acct);
+		playerHome.savePages(playerHome, playerfindDrillPage);
+		playerfindDrillPage.savePages(playerHome, playerfindDrillPage);
+		
 		// Registration Pages
 		crpage.savePages(coachHomePage, regPage);
-		lgpage.savePages(coachHomePage);
-		prpage.savePages(regPage);
+		lgpage.savePages(coachHomePage, playerHome);
+		prpage.savePages(regPage, playerHome);
 		regPage.savePages(prpage, crpage, lgpage);
+		
+		
+//		playerHome.show();
 		
 //		teamPage.show();
 		lgpage.show();

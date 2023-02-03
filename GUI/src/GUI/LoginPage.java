@@ -61,6 +61,7 @@ public class LoginPage extends AbstractPage {
 	
 	// account handler
 	private AccountHandler acct;
+	private PlayerHomePage playerHomePage;
 	
 	/**
 	 * Creates a LoginPage so the user can log in
@@ -128,8 +129,9 @@ public class LoginPage extends AbstractPage {
 		frame.setVisible(true);
 	}
 	
-	public void savePages(CoachHomePage coachHomePage) {
+	public void savePages(CoachHomePage coachHomePage, PlayerHomePage playerHomePage) {
 		this.homePage   = coachHomePage;
+		this.playerHomePage = playerHomePage;
 	
 	}
 
@@ -172,6 +174,7 @@ public class LoginPage extends AbstractPage {
 
 				if (typeValue.equals("Player")) {
 					clear();
+					playerHomePage.show();
 					//switch the page
 				} else if (typeValue.equals("Coach")) {
 					//switch the page

@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
@@ -72,13 +70,12 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		buttonPanel.add(TeamButton, BorderLayout.NORTH);
 
 		buttonPanel.setMaximumSize(new Dimension(700, 100));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
 //		textPanel.setMaximumSize(new Dimension(1400, 100));
 //		buttonPanel.setBackground(Color.red);
 		masterPanel.add(buttonPanel, BorderLayout.CENTER);
-//		masterPanel.add(textPanel, BorderLayout.NORTH);
-//		textPanel.setBackground(Color.CYAN);
-//		masterPanel.setBackground(Color.green);
-		
+//		masterPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		frame.add(masterPanel);
 

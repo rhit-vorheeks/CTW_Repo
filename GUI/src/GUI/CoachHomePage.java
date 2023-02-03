@@ -150,7 +150,7 @@ public class CoachHomePage extends CoachDisplayPage {
 		rosterPanel.removeAll();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
-//		rosterPanel.remove(table);
+//		statPanel.remove(table);
 		getTable(query, table);
 	}
 
