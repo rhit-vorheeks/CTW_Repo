@@ -32,7 +32,7 @@ public class PlayerHomePage extends PlayerDisplayPage {
 	JLabel statLabel = new JLabel("Stats: ");
 	JTable statTable = new JTable();
 
-	String statQuery = "SELECT hs.StatName 'Stat Name', hs.Quantity as 'Quantity', hs.[Date] as 'Date', p.FName as 'First Name', p.Lname as 'Last Name', p.Username as 'Username' \r\n"
+	String statQuery = "SELECT hs.StatName 'Stat Name', hs.Quantity as 'Quantity', hs.[Date] as 'Date' \r\n"
 			+ "FROM HasStat hs JOIN Person p ON p.ID = hs.PlayerID\r\n"
 			+ "WHERE p.Username = ? \r\n"
 			+ "ORDER BY hs.[Date] desc";

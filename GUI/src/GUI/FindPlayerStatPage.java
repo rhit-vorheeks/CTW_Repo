@@ -32,7 +32,7 @@ public class FindPlayerStatPage extends CoachDisplayPage {
 	private JLabel targetPlayerLabel = new JLabel("Target Player: ");
 	private JTable table = null;
 	private JComboBox<String> dropDown = null;
-	private JButton submitButton = new JButton("Submit");
+	private JButton submitButton = new JButton("SubmitButton");
 
 	private JFrame frame = null;
 	private DatabaseConnectionService dbService = null;
@@ -120,7 +120,7 @@ public class FindPlayerStatPage extends CoachDisplayPage {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked Submit");
+				System.out.println("Clicked SubmitButton");
 				String selection = (String) dropDown.getSelectedItem();
 				
 				refreshTable(selection);

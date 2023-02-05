@@ -34,11 +34,12 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 		//Pages 
 		private PlayerFindDrillPage findDrillPage = null;
 		private PlayerHomePage playerHomePage;
+		private PlayerUserPage playerUserPage;
 		
 		
 	public PlayerDisplayPage(JFrame frame){
 		super(frame);
-
+		
 		// Panels
 		this.textPanel = new JPanel();
 		this.buttonPanel = new JPanel();
@@ -81,9 +82,10 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 		return masterPanel;
 	}
 	
-	public void savePages(PlayerHomePage playerHomePage, PlayerFindDrillPage findDrillPage) {
+	public void savePages(PlayerHomePage playerHomePage, PlayerFindDrillPage findDrillPage, PlayerUserPage playerUserPage) {
 		this.playerHomePage = playerHomePage;
 		this.findDrillPage = findDrillPage;
+		this.playerUserPage = playerUserPage;
 	
 	}
 	
@@ -92,8 +94,8 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 		UserButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				clear();
-//				teamPage.show();
+				clear();
+				playerUserPage.show();
 				System.out.println("Clicked User");
 								
 			}

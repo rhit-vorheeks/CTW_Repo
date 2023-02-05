@@ -86,7 +86,7 @@ public class TeamPage extends CoachDisplayPage {
 	JTextField nameTF = new JTextField();
 	JTextField leagueTF = new JTextField();
 
-	JButton submitButton = new JButton("Submit");
+	JButton submitButton = new JButton("SubmitButton");
 
 	JFrame frame = null;
 	private DatabaseConnectionService connection = null;
@@ -274,7 +274,7 @@ public class TeamPage extends CoachDisplayPage {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked Submit");
+				System.out.println("Clicked SubmitButton");
 				String nameValue = nameTF.getText();
 				String leagueValue = leagueTF.getText();
 
@@ -566,7 +566,7 @@ public class TeamPage extends CoachDisplayPage {
 			return returnValue;
 		} else {
 			mess = "ERROR: Enter Valid Player Data";
-			
+			System.out.println(returnValue);
 			System.out.println(returnValue);
 			JOptionPane.showMessageDialog(null, mess);
 			return returnValue;

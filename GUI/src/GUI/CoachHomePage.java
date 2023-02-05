@@ -101,10 +101,6 @@ public class CoachHomePage extends CoachDisplayPage {
 
 		ResultSet rs;
 		try {
-//			String query = "SELECT T.[Name] AS 'Team Name', P.FName AS 'First Name', P.Lname AS 'Last Name', P.Username as 'Username', PO.PositionName as 'Position', P.Type as 'Type'\r\n"
-//					+ "FROM Team T Join PlaysOn PO on T.ID = PO.TeamID\r\n" + "JOIN Person P on P.ID = PO.PlayerID\r\n"
-//					+ "JOIN Coaches C on C.TeamID = T.ID \r\n" + "JOIN Person P2 on P2.ID = C.CoachID\r\n"
-//					+ "WHERE P2.Username = ? and PO.EndDate is null\r\n" + "GROUP BY P.Type, T.[Name], P.Lname, P.FName, P.Username, PO.PositionName";
 			PreparedStatement stmt = this.dbService.getConnection().prepareStatement(query);
 			stmt.setString(1, this.acct.getName());
 			rs = stmt.executeQuery();

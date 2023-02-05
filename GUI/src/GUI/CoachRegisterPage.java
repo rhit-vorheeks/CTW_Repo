@@ -132,7 +132,7 @@ public class CoachRegisterPage extends AbstractPage {
 
 		masterPanel.add(buttonPanel, BorderLayout.CENTER);
 //		masterPanel.add(backButton);
-//		masterPanel.add(registerButton, BorderLayout.EAST);
+//		masterPanel.add(SubmitButton, BorderLayout.EAST);
 
 		frame.add(masterPanel);
 		frame.setVisible(true);

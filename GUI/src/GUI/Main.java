@@ -38,8 +38,10 @@ public class Main {
 		//Player Pages 
 		PlayerFindDrillPage playerfindDrillPage = new PlayerFindDrillPage(frame, connection);
 		PlayerHomePage playerHome = new PlayerHomePage(frame, connection, acct);
-		playerHome.savePages(playerHome, playerfindDrillPage);
-		playerfindDrillPage.savePages(playerHome, playerfindDrillPage);
+		PlayerUserPage playeruserPage = new PlayerUserPage(frame, connection, acct);
+		playerHome.savePages(playerHome, playerfindDrillPage, playeruserPage);
+		playerfindDrillPage.savePages(playerHome, playerfindDrillPage, playeruserPage);
+		playeruserPage.savePages(playerHome, playerfindDrillPage, playeruserPage);
 		
 		// Registration Pages
 		crpage.savePages(coachHomePage, regPage);
