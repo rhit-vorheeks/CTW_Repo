@@ -15,31 +15,29 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.table.TableColumn;
 
-public abstract class PlayerDisplayPage extends AbstractPage{
+public abstract class PlayerDisplayPage extends AbstractPage {
 
-	
-		// Panels
-		private JPanel textPanel;
-		private JPanel buttonPanel;
-		private JPanel masterPanel;
+	// Panels
+	private JPanel textPanel;
+	private JPanel buttonPanel;
+	private JPanel masterPanel;
 
-		// Buttons
-		private JButton HomeButton;
-		private JButton FindDrillButton;
-		private JButton AddPlayerStatButton;
+	// Buttons
+	private JButton HomeButton;
+	private JButton FindDrillButton;
+	private JButton AddPlayerStatButton;
 //		private JButton TeamButton;
-		private JButton UserButton;
+	private JButton UserButton;
 
-		
-		//Pages 
-		private PlayerFindDrillPage findDrillPage = null;
-		private PlayerHomePage playerHomePage;
-		private PlayerUserPage playerUserPage;
-		
-		
-	public PlayerDisplayPage(JFrame frame){
+	// Pages
+	private PlayerFindDrillPage findDrillPage = null;
+	private PlayerHomePage playerHomePage;
+	private PlayerUserPage playerUserPage;
+	private PlayerAddStatPage playerAddStatPage;
+
+	public PlayerDisplayPage(JFrame frame) {
 		super(frame);
-		
+
 		// Panels
 		this.textPanel = new JPanel();
 		this.buttonPanel = new JPanel();
@@ -51,17 +49,16 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 		AddPlayerStatButton = new JButton("Add Stats");
 		FindDrillButton = new JButton("Find a Drill");
 //		TeamButton = new JButton("Team");
-		
-		this.buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));		
+
+		this.buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		this.masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		onUserButtonClick();
 		onFindDrillButtonClick();
 		onAddPlayerStatButtonClick();
 		onHomeButtonClick();
-		
-		
+
 	}
 
 	public JPanel show() {
@@ -74,22 +71,23 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 
 		buttonPanel.setMaximumSize(new Dimension(1400, 100));
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		
+
 		masterPanel.add(buttonPanel, BorderLayout.CENTER);
 
 		frame.add(masterPanel);
 		frame.setVisible(true);
 		return masterPanel;
 	}
-	
-	public void savePages(PlayerHomePage playerHomePage, PlayerFindDrillPage findDrillPage, PlayerUserPage playerUserPage) {
+
+	public void savePages(PlayerHomePage playerHomePage, PlayerFindDrillPage findDrillPage,
+			PlayerUserPage playerUserPage, PlayerAddStatPage playerAddStatPage) {
 		this.playerHomePage = playerHomePage;
 		this.findDrillPage = findDrillPage;
 		this.playerUserPage = playerUserPage;
-	
+		this.playerAddStatPage = playerAddStatPage;
+
 	}
-	
-	
+
 	public void onUserButtonClick() {
 		UserButton.addActionListener(new ActionListener() {
 			@Override
@@ -97,7 +95,7 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 				clear();
 				playerUserPage.show();
 				System.out.println("Clicked User");
-								
+
 			}
 
 		});
@@ -114,19 +112,19 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 
 		});
 	}
-	
+
 	public void onAddPlayerStatButtonClick() {
 		AddPlayerStatButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Add a Player Stat");
-//				clear();
-//				findPlayerStatPage.show();
+				clear();
+				playerAddStatPage.show();
 			}
 
 		});
 	}
-	
+
 	public void onHomeButtonClick() {
 		HomeButton.addActionListener(new ActionListener() {
 			@Override
@@ -139,8 +137,5 @@ public abstract class PlayerDisplayPage extends AbstractPage{
 
 		});
 	}
-	
 
-	
 }
-
