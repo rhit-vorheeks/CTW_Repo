@@ -593,8 +593,21 @@ public class TeamPage extends CoachDisplayPage {
 
 		} catch (SQLException e) {
 			System.out.println(e.toString());
+			JOptionPane.showMessageDialog(null,"Error Adding Coach");
 			return false;
 
+		}
+		if (returnValue == 0) {
+			System.out.println("Success");
+			JOptionPane.showMessageDialog(null,"Coach Added");
+		} else if (returnValue == 12) {
+			JOptionPane.showMessageDialog(null,"Cannot start this position twice on the same day.");
+		}  
+		else {
+			mess = "ERROR: Enter Valid Coach Data";
+			System.out.println(returnValue);
+			System.out.println(returnValue);
+			JOptionPane.showMessageDialog(null, mess);
 		}
 		return true;
 	}

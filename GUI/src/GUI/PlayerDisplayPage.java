@@ -94,7 +94,7 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 			public void actionPerformed(ActionEvent e) {
 				clear();
 				playerUserPage.show();
-				System.out.println("Clicked User");
+//				System.out.println("Clicked User");
 
 			}
 
@@ -105,7 +105,7 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 		FindDrillButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked Find Drill");
+//				System.out.println("Clicked Find Drill");
 				clear();
 				findDrillPage.show();
 			}
@@ -117,7 +117,7 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 		AddPlayerStatButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked Add a Player Stat");
+//				System.out.println("Clicked Add a Player Stat");
 				clear();
 				playerAddStatPage.show();
 			}
@@ -129,7 +129,7 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 		HomeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked Home");
+//				System.out.println("Clicked Home");
 				clear();
 //				playerHomePage.refreshTable();
 				playerHomePage.show();

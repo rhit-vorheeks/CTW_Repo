@@ -1,9 +1,13 @@
 package GUI;
 
 import java.awt.Dimension;
-import GUI.CoachRegisterPage;
 
 import javax.swing.JFrame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.IOException;
+import javax.swing.JPanel;
 
 public class Main {
 	public static final Dimension SCREEN_SIZE = new Dimension(1400, 800);
@@ -15,11 +19,14 @@ public class Main {
 		connection.connect();
 		
 		AccountHandler acct = new AccountHandler();
+		
+		Image img = Toolkit.getDefaultToolkit().getImage("/CTW__GUI/src/basketball-ball-wooden-background-vector-illustration_64749-4313.jpg");
+		
 
 		JFrame frame = new JFrame();
 		frame.setSize(SCREEN_SIZE);
 		frame.setTitle(TITLE);
-
+		
 		CoachRegisterPage crpage = new CoachRegisterPage(frame, connection);
 		PlayerRegisterPage prpage = new PlayerRegisterPage(frame, connection);
 		RegisterPage regPage = new RegisterPage(frame);

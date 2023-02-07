@@ -31,20 +31,22 @@ public class CoachHomePage extends CoachDisplayPage {
 	JPanel rosterPanel = new JPanel();
 	JPanel masterPanel = new JPanel();
 
-	JLabel rosterLabel = new JLabel("Roster: ");
+	JLabel rosterLabel = new JLabel("Player Roster: ");
+	JLabel coachRosterLabel = new JLabel("Coach Roster: ");
+
 	JTable rosterTable = new JTable();
 
 	JFrame frame = null;
 	JTable table = null;
 	JTable coachTable = null;
 
-	String rosterquery = "SELECT T.[Name] AS 'Team Name', P.FName AS 'First Name', P.Lname AS 'Last Name', P.Username as 'Username', PO.PositionName as 'Position', P.Type as 'Type'\r\n"
+	String rosterquery = "SELECT P.Username as 'Username', T.[Name] AS 'Team Name', P.FName AS 'First Name', P.Lname AS 'Last Name',  PO.PositionName as 'Position', P.Type as 'Type'\r\n"
 			+ "FROM Team T Join PlaysOn PO on T.ID = PO.TeamID\r\n" + "JOIN Person P on P.ID = PO.PlayerID\r\n"
 			+ "JOIN Coaches C on C.TeamID = T.ID \r\n" + "JOIN Person P2 on P2.ID = C.CoachID\r\n"
 			+ "WHERE P2.Username = ? and PO.EndDate is null\r\n"
 			+ "GROUP BY P.Type, T.[Name], P.Lname, P.FName, P.Username, PO.PositionName";
 
-	String coachquery = "SELECT T.[Name] AS 'Team Name', P.FName AS 'First Name', P.Lname AS 'Last Name', P.Username as 'Username', Coach.Rank as 'Rank' , P.Type as 'Type'\r\n"
+	String coachquery = "SELECT  P.Username as 'Username', T.[Name] AS 'Team Name', P.FName AS 'First Name', P.Lname AS 'Last Name', Coach.Rank as 'Rank' , P.Type as 'Type'\r\n"
 			+ "FROM Team T JOIN Coaches C on C.TeamID = T.ID \r\n" + "JOIN Coaches C2 on C2.TeamID = T.ID \r\n"
 			+ "JOIN Person P on P.ID = C.CoachID\r\n" + "JOIN Person P2 on P2.ID = C2.CoachID\r\n"
 			+ "JOIN Coach on Coach.ID = P.ID\r\n" + "WHERE P2.Username = ? and C.EndDate is null\r\n"
@@ -73,7 +75,7 @@ public class CoachHomePage extends CoachDisplayPage {
 		table = getTable(rosterquery, table);
 		table.setMaximumSize(new Dimension(800, 600));
 
-
+		
 		coachTable = getTable(coachquery, coachTable);
 		coachTable.setMaximumSize(new Dimension(800, 600));
 
@@ -89,6 +91,7 @@ public class CoachHomePage extends CoachDisplayPage {
 
 
 		rosterPanel.add(new JScrollPane(table));
+		rosterPanel.add(coachRosterLabel);
 		rosterPanel.add(new JScrollPane(coachTable));
 		masterPanel.add(rosterPanel, BorderLayout.NORTH);
 		frame.setVisible(true);

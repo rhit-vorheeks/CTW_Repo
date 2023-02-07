@@ -38,7 +38,7 @@ public class CoachRegisterPage extends AbstractPage {
 	private JLabel firstName = new JLabel("First Name:	");
 	private JLabel lastName = new JLabel("Last Name:	");
 	private JLabel DOB = new JLabel("DOB:	");
-	private JLabel type = new JLabel("Type:	");
+	private JLabel type = new JLabel("Rank:	");
 
 	// Text Fields
 	private JTextField firstNameTF = new JTextField();

@@ -69,9 +69,9 @@ public class FindPlayerStatPage extends CoachDisplayPage {
 		masterPanel.add(selectPanel, BorderLayout.CENTER);
 		masterPanel.add(statPanel, BorderLayout.CENTER);
 		
-		if(table == null) {
+//		if(table == null) {
 			getTable("All");
-		}
+//		}
 		
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			wrapCol(i, table);
@@ -140,18 +140,19 @@ public class FindPlayerStatPage extends CoachDisplayPage {
 		String query = null;
 		try {
 			if (selection.equals("All")) {
-				query = "SELECT DISTINCT hs.StatName 'Stat Name', hs.Quantity as 'Quantity', hs.[Date] as 'Date', p.FName as 'First Name', p.Lname as 'Last Name', p.Username as 'Username'\r\n"
+				query = "SELECT DISTINCT p.Username as 'Username', hs.StatName 'Stat Name', hs.Quantity as 'Quantity', hs.[Date] as 'Date', p.FName as 'First Name', p.Lname as 'Last Name' \r\n"
 						+ "FROM Team T Join PlaysOn PO on T.ID = PO.TeamID JOIN Person P on P.ID = PO.PlayerID\r\n"
 						+ "JOIN Coaches C on C.TeamID = T.ID  JOIN Person P2 on P2.ID = C.CoachID\r\n"
 						+ "JOIN HasStat hs on hs.PlayerID = po.PlayerID\r\n"
-						+ "WHERE P2.Username = 'granny' and PO.EndDate is null\r\n"
+						+ "WHERE P2.Username = ? and PO.EndDate is null\r\n"
 						+ "ORDER BY p.Lname asc, hs.[Date] desc";
 				PreparedStatement stmt = dbService.getConnection().prepareStatement(query);
+				stmt.setString(1, this.acct.getName());
 				rs = stmt.executeQuery();
 				System.out.println(rs.toString());
 				table = new JTable(buildTableModel(rs));
 			}  else {
-				query = "SELECT hs.StatName 'Stat Name', hs.Quantity as 'Quantity', hs.[Date] as 'Date', p.FName as 'First Name', p.Lname as 'Last Name', p.Username as 'Username' \r\n"
+				query = "SELECT p.Username as 'Username', hs.StatName 'Stat Name', hs.Quantity as 'Quantity', hs.[Date] as 'Date', p.FName as 'First Name', p.Lname as 'Last Name' \r\n"
 						+ "FROM HasStat hs JOIN Person p ON p.ID = hs.PlayerID\r\n"
 						+ "WHERE p.Username = ? \r\n"
 						+ "ORDER BY hs.[Date] desc";
