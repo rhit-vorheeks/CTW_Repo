@@ -55,14 +55,11 @@ BEGIN
 		RETURN 8
 	END
 
-	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID AND StartDate = @StartDate))BEGIN
-		PRINT('Coach is already on the team.')
-		RETURN 9
-	END
+	
 
 	Declare @TName varchar(50)
 	Select @TName = [Name] From Team Where ID = @TeamID
-	IF(@TName in (Select t.Name From Team t join coaches c on t.ID = c.TeamID Where c.CoachID = @ID)) BEGIN
+	IF(EXISTS (Select t.[Name] From Team t join coaches c on t.ID = c.TeamID Where c.CoachID = @ID and (c.EndDate is null or c.EndDate = ''))) BEGIN
 		Print 'Coach already coaches a team with this name'
 		RETURN 11
 	END
@@ -80,9 +77,17 @@ BEGIN
 			RETURN 10
 
 		End 
+
+		IF(Exists(Select StartDate From Coaches where CoachID = @ID AND TeamID = @TeamID and StartDate = @StartDate )) BEGIN
+			PRINT 'Cannot start same position twice in one day'
+			Return 12
+		END
 	END
 
-
+	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID AND StartDate = @StartDate))BEGIN
+		PRINT('Coach is already on the team.')
+		RETURN 9
+	END
 
     INSERT INTO Coaches ([CoachID], TeamID, StartDate,EndDate)
     VALUES (@ID, @TeamID, @StartDate, @EndDate)
