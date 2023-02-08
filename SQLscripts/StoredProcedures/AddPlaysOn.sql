@@ -1,7 +1,12 @@
-USE CTW_DB
+USE [CTW_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[AddPlaysOn]    Script Date: 2/7/2023 7:19:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 -- Ari
-CREATE PROCEDURE AddPlaysOn
+CREATE PROCEDURE [dbo].[AddPlaysOn]
     @TeamID int,
     @Username varchar(50),
 	@PositionName varchar(100),
@@ -67,11 +72,37 @@ BEGIN
 		RETURN 9
 	END
 
+
 	IF(EXISTS(select PositionName, PlayerID, TeamID From PlaysOn Where PlayerID = @ID AND PositionName = @PositionName
-	AND TeamID = @TeamID))BEGIN
-		PRINT('Player already plays on this position on this team.')
+	AND TeamID = @TeamID AND (EndDate is null or EndDate = '')))BEGIN
+		PRINT('Player already plays this position on this team.')
 		RETURN 10
 	END
+
+
+
+	IF(EXISTS(select PlayerID, TeamID, PositionName From PlaysOn Where PlayerID = @ID AND TeamID = @TeamID AND PositionName = @PositionName ))BEGIN
+		
+		Declare @LastStartDate date
+		Select @LastStartDate = MAX (StartDate) From PlaysOn Where PlayerID = @ID AND TeamID = @TeamID Group by PlayerID, TeamID
+		
+		Declare @End date
+		select @End = EndDate from PlaysOn where TeamID = @TeamID AND PlayerID= @ID  AND StartDate = @LastStartDate AND PositionName = @PositionName;
+
+		IF(@End is null OR @End ='')Begin 
+			PRINT('Player still plays this position on this team.')
+			RETURN 11
+
+		End 
+
+		IF(Exists(Select StartDate From PlaysOn where PlayerID = @ID AND TeamID = @TeamID and StartDate = @StartDate and PositionName = @PositionName )) BEGIN
+			PRINT 'Cannot start same position twice in one day'
+			Return 12
+		END
+
+
+	END
+
 
 	INSERT INTO PlaysOn(PlayerID, TeamID, PositionName, [StartDate], EndDate)
     VALUES (@ID, @TeamID, @PositionName, @StartDate, @EndDate)
