@@ -1,8 +1,6 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.*;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
@@ -246,6 +244,7 @@ public class TeamPage extends CoachDisplayPage {
 
 	public JPanel show() {
 		masterPanel = super.show();
+
 		namePanel.add(teamNameLabel);
 		namePanel.add(nameTF);
 
@@ -256,6 +255,7 @@ public class TeamPage extends CoachDisplayPage {
 //		createPanel.setBackground(Color.GREEN);
 //		selectTeamPanelForCoach.setBackground(Color.BLUE);
 		selectTeamPanelForCoach.setMaximumSize(new Dimension(700, 200));
+		
 		
 		masterPanel.add(createLabel, BorderLayout.NORTH);
 		masterPanel.add(namePanel, BorderLayout.NORTH);
