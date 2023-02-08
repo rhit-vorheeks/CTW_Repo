@@ -37,20 +37,20 @@ public class Main {
 		FindPlayerStatPage findPlayerStatPage =  new FindPlayerStatPage(frame, connection, acct);
 		
 		// Program Pages
-		teamPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
-		coachHomePage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
-		findDrillPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
-		findPlayerStatPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage);
+		teamPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage, lgpage);
+		coachHomePage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage, lgpage);
+		findDrillPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage, lgpage);
+		findPlayerStatPage.savePages(teamPage, findDrillPage, findPlayerStatPage, coachHomePage, lgpage);
 		
 		//Player Pages 
 		PlayerFindDrillPage playerfindDrillPage = new PlayerFindDrillPage(frame, connection);
 		PlayerHomePage playerHome = new PlayerHomePage(frame, connection, acct);
 		PlayerUserPage playeruserPage = new PlayerUserPage(frame, connection, acct);
 		PlayerAddStatPage playerAddStatPage = new PlayerAddStatPage(frame, connection, acct);
-		playerHome.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage);
-		playerfindDrillPage.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage);
-		playeruserPage.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage);
-		playerAddStatPage.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage);
+		playerHome.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage, lgpage);
+		playerfindDrillPage.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage, lgpage);
+		playeruserPage.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage, lgpage);
+		playerAddStatPage.savePages(playerHome, playerfindDrillPage, playeruserPage, playerAddStatPage, lgpage);
 		
 		
 		// Registration Pages

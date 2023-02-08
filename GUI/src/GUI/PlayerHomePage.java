@@ -29,7 +29,7 @@ public class PlayerHomePage extends PlayerDisplayPage {
 	JPanel statPanel = new JPanel();
 	JPanel masterPanel = new JPanel();
 
-	JLabel statLabel = new JLabel("Stats: ");
+	JLabel statLabel = new JLabel("Your Stats: ");
 	JTable statTable = new JTable();
 
 	String statQuery = "SELECT hs.StatName 'Stat Name', hs.Quantity as 'Quantity', hs.[Date] as 'Date' \r\n"

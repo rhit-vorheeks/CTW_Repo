@@ -134,6 +134,11 @@ public class LoginPage extends AbstractPage {
 		this.playerHomePage = playerHomePage;
 	
 	}
+	
+	public void clearFields() {
+		this.usernameTextBox.setText("");
+		this.passwordTextBox.setText("");
+	}
 
 	public void onRegisterButtonClick() {
 		registerButton.addActionListener(new ActionListener() {

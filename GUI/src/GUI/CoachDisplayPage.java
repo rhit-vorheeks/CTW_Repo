@@ -26,6 +26,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		private JButton FindDrillButton;
 		private JButton FindPlayerStatButton;
 		private JButton TeamButton;
+		private JButton LogoutButton;
 
 		
 		//Pages 
@@ -33,6 +34,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		private FindDrillPage findDrillPage = null;
 		private FindPlayerStatPage findPlayerStatPage = null;
 		private TeamPage teamPage = null;
+		private LoginPage loginPage;
 		
 		
 	public CoachDisplayPage(JFrame frame){
@@ -48,6 +50,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		FindDrillButton = new JButton("Find a Drill");
 		FindPlayerStatButton = new JButton("Find a Player Stat");
 		TeamButton = new JButton("Team");
+		LogoutButton = new JButton("Logout");
 		
 		this.buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));		
 		this.masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
@@ -57,7 +60,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		onFindDrillButtonClick();
 		onFindPlayerStatButtonClick();
 		onHomeButtonClick();
-		
+		onLogoutButtonClick();
 		
 	}
 
@@ -68,6 +71,7 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		buttonPanel.add(FindDrillButton, BorderLayout.NORTH);
 		buttonPanel.add(FindPlayerStatButton, BorderLayout.NORTH);
 		buttonPanel.add(TeamButton, BorderLayout.NORTH);
+		buttonPanel.add(LogoutButton, BorderLayout.NORTH);
 
 		buttonPanel.setMaximumSize(new Dimension(700, 100));
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -83,12 +87,12 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		return masterPanel;
 	}
 	
-	public void savePages(TeamPage teamPage, FindDrillPage findDrillPage, FindPlayerStatPage findPlayerStatPage, CoachHomePage coachHomePage) {
+	public void savePages(TeamPage teamPage, FindDrillPage findDrillPage, FindPlayerStatPage findPlayerStatPage, CoachHomePage coachHomePage, LoginPage loginPage) {
 		this.teamPage = teamPage;
 		this.findDrillPage = findDrillPage;
 		this.findPlayerStatPage = findPlayerStatPage;
 		this.homePage = coachHomePage;
-	
+		this.loginPage = loginPage;
 	}
 	
 	
@@ -142,6 +146,17 @@ public abstract class CoachDisplayPage extends AbstractPage{
 		});
 	}
 	
+	public void onLogoutButtonClick() {
+		LogoutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Logout");
+				clear();
+				loginPage.clearFields();
+				loginPage.show();
+			}
 
+		});
+	}
 	
 }

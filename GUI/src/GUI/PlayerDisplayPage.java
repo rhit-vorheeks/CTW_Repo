@@ -26,14 +26,15 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 	private JButton HomeButton;
 	private JButton FindDrillButton;
 	private JButton AddPlayerStatButton;
-//		private JButton TeamButton;
 	private JButton UserButton;
+	private JButton LogoutButton;
 
 	// Pages
 	private PlayerFindDrillPage findDrillPage = null;
 	private PlayerHomePage playerHomePage;
 	private PlayerUserPage playerUserPage;
 	private PlayerAddStatPage playerAddStatPage;
+	private LoginPage loginPage;
 
 	public PlayerDisplayPage(JFrame frame) {
 		super(frame);
@@ -48,7 +49,7 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 		UserButton = new JButton("User");
 		AddPlayerStatButton = new JButton("Add Stats");
 		FindDrillButton = new JButton("Find a Drill");
-//		TeamButton = new JButton("Team");
+		LogoutButton = new JButton("Logout");
 
 		this.buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		this.masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
@@ -58,6 +59,7 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 		onFindDrillButtonClick();
 		onAddPlayerStatButtonClick();
 		onHomeButtonClick();
+		onLogoutButtonClick();
 
 	}
 
@@ -68,6 +70,7 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 		buttonPanel.add(FindDrillButton, BorderLayout.CENTER);
 		buttonPanel.add(AddPlayerStatButton, BorderLayout.CENTER);
 		buttonPanel.add(UserButton, BorderLayout.CENTER);
+		buttonPanel.add(LogoutButton, BorderLayout.CENTER);
 
 		buttonPanel.setMaximumSize(new Dimension(1400, 100));
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -80,12 +83,12 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 	}
 
 	public void savePages(PlayerHomePage playerHomePage, PlayerFindDrillPage findDrillPage,
-			PlayerUserPage playerUserPage, PlayerAddStatPage playerAddStatPage) {
+			PlayerUserPage playerUserPage, PlayerAddStatPage playerAddStatPage, LoginPage loginPage) {
 		this.playerHomePage = playerHomePage;
 		this.findDrillPage = findDrillPage;
 		this.playerUserPage = playerUserPage;
 		this.playerAddStatPage = playerAddStatPage;
-
+		this.loginPage = loginPage;
 	}
 
 	public void onUserButtonClick() {
@@ -137,5 +140,16 @@ public abstract class PlayerDisplayPage extends AbstractPage {
 
 		});
 	}
+	public void onLogoutButtonClick() {
+		LogoutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Logout");
+				clear();
+				loginPage.clearFields();
+				loginPage.show();
+			}
 
+		});
+	}
 }
