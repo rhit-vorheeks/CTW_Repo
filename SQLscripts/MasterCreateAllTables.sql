@@ -71,7 +71,7 @@ Create Table PlaysOn(
 	StartDate date not null Check(StartDate <= GetDate()),
 	EndDate date,
 	CHECK(EndDate>= StartDate),
-	Primary key(PlayerID, TeamID, PositionName)
+	Primary key(PlayerID, TeamID, PositionName, StartDate)
 );
 
 

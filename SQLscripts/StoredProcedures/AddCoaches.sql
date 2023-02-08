@@ -1,7 +1,12 @@
-USE CTW_DB
+USE [CTW_DB]
+GO
+/****** Object:  StoredProcedure [dbo].[AddCoaches]    Script Date: 2/7/2023 7:18:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 -- Keegan
-CREATE PROCEDURE AddCoaches
+CREATE PROCEDURE [dbo].[AddCoaches]
     @Username VARCHAR(50),
     @TeamID int,
 	@StartDate date,
@@ -59,10 +64,11 @@ BEGIN
 
 	Declare @TName varchar(50)
 	Select @TName = [Name] From Team Where ID = @TeamID
-	IF(EXISTS (Select t.[Name] From Team t join coaches c on t.ID = c.TeamID Where c.CoachID = @ID and (c.EndDate is null or c.EndDate = ''))) BEGIN
+	IF(EXISTS (Select t.[Name] From Team t join coaches c on t.ID = c.TeamID Where t.[Name] = @TName AND c.CoachID = @ID and (c.EndDate is null or c.EndDate = ''))) BEGIN
 		Print 'Coach already coaches a team with this name'
 		RETURN 11
 	END
+
 
 	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID ))BEGIN
 		
@@ -84,10 +90,12 @@ BEGIN
 		END
 	END
 
+
 	IF(EXISTS(select CoachID, TeamID From Coaches Where CoachID = @ID AND TeamID = @TeamID AND StartDate = @StartDate))BEGIN
 		PRINT('Coach is already on the team.')
 		RETURN 9
 	END
+
 
     INSERT INTO Coaches ([CoachID], TeamID, StartDate,EndDate)
     VALUES (@ID, @TeamID, @StartDate, @EndDate)
