@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[UpdateHasStat]    Script Date: 2/15/2023 11:23:11 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
-create Proc UpdateHasStat
+CREATE Proc [dbo].[UpdateHasStat]
 	@Name VARCHAR(50),
     @Username varchar(50),
 	@Date date = null,

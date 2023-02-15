@@ -1,4 +1,7 @@
-USE [CTW_DB]
+/****** Object:  StoredProcedure [dbo].[setCoachesEndDate]    Script Date: 2/15/2023 11:22:17 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE Proc [dbo].[setCoachesEndDate]

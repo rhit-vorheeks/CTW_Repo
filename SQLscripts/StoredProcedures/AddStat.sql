@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[AddStat]    Script Date: 2/15/2023 11:17:20 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 -- Kaylee
-CREATE PROCEDURE AddStat
+CREATE PROCEDURE [dbo].[AddStat]
     @Name VARCHAR(50),
     @Desc text = null,
 	@Type varchar(100) =null

@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[AddCoach]    Script Date: 2/15/2023 11:10:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 -- Keegan
-CREATE PROCEDURE AddCoach
+CREATE PROCEDURE [dbo].[AddCoach]
     @Username VARCHAR(50),
     @Rank VARCHAR(50) = null
 AS

@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[GetRoster]    Script Date: 2/15/2023 11:20:46 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER Proc GetRoster
+CREATE Proc [dbo].[GetRoster]
 	@CoachUsername varchar(50)
 
 AS

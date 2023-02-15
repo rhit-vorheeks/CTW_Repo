@@ -1,6 +1,9 @@
-Use CTW_DB
+/****** Object:  StoredProcedure [dbo].[CoachAddsTeam]    Script Date: 2/15/2023 11:18:52 AM ******/
+SET ANSI_NULLS ON
 GO
-Create PROC CoachAddsTeam
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[CoachAddsTeam]
 	@CoachUsername varchar(50),
 	@TeamName varchar(100),
 	@TeamLeague varchar(100)

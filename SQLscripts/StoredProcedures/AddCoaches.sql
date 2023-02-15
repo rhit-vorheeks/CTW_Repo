@@ -1,6 +1,5 @@
-USE [CTW_DB]
-GO
-/****** Object:  StoredProcedure [dbo].[AddCoaches]    Script Date: 2/7/2023 7:18:54 PM ******/
+
+/****** Object:  StoredProcedure [dbo].[AddCoaches]    Script Date: 2/15/2023 11:10:32 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

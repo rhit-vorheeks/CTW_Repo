@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[AddPosition]    Script Date: 2/15/2023 11:16:53 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 --Keegan
-CREATE PROCEDURE AddPosition
+CREATE PROCEDURE [dbo].[AddPosition]
     @Name VARCHAR(100),
 	@Desc text = null
 AS

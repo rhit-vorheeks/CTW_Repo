@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[AddPlayer]    Script Date: 2/15/2023 11:15:22 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 -- Ari
-CREATE PROCEDURE AddPlayer
+CREATE PROCEDURE [dbo].[AddPlayer]
     @Username VARCHAR(50),
     @Height int = null,
 	@Weight int =null

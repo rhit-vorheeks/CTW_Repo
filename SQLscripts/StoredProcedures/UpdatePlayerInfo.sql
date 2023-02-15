@@ -1,5 +1,11 @@
 
-CREATE PROC UpdatePlayerInfo
+/****** Object:  StoredProcedure [dbo].[UpdatePlayerInfo]    Script Date: 2/15/2023 11:24:06 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROC [dbo].[UpdatePlayerInfo]
     @Username varchar(50),
     @Height int = null,
 	@Weight int = null

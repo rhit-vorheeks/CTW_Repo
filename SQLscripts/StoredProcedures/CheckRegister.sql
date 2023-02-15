@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[CheckRegister]    Script Date: 2/15/2023 11:18:36 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 -- Kaylee
-ALTER PROCEDURE CheckRegister
+CREATE PROCEDURE [dbo].[CheckRegister]
 	@Username varchar(50)
 
 	AS 
@@ -18,4 +21,5 @@ ALTER PROCEDURE CheckRegister
 
 		RETURN 0
 	END
+	
 	

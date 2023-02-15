@@ -1,6 +1,4 @@
-USE [CTW_DB]
-GO
-/****** Object:  StoredProcedure [dbo].[AddPlaysOn]    Script Date: 2/7/2023 7:19:03 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddPlaysOn]    Script Date: 2/15/2023 11:16:21 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[GetDrill]    Script Date: 2/15/2023 11:19:29 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
-create Proc GetDrill
+CREATE Proc [dbo].[GetDrill]
 	@statName varchar(50)
 
 AS

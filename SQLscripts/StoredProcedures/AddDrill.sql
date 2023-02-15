@@ -1,7 +1,10 @@
-USE CTW_DB
+/****** Object:  StoredProcedure [dbo].[AddDrill]    Script Date: 2/15/2023 11:13:00 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 --Ari
-CREATE PROCEDURE AddDrill
+CREATE PROCEDURE [dbo].[AddDrill]
     @Name VARCHAR(100),
 	@Desc text = null
 AS
