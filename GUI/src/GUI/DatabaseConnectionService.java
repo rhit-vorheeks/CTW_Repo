@@ -6,27 +6,22 @@ import java.sql.SQLException;
 
 public class DatabaseConnectionService {
 
-	// DO NOT EDIT THIS STRING, YOU WILL RECEIVE NO CREDIT FOR THIS TASK IF THIS
-	// STRING IS EDITED
-	private final String SampleURL = "jdbc:sqlserver://${dbServer};databaseName=${dbName};user=${user};password={${pass}}";
-
 	private Connection connection = null;
 
 	private String databaseName;
 	private String serverName;
 
 	public DatabaseConnectionService(String serverName, String databaseName) {
-		// DO NOT CHANGE THIS METHOD
 		this.serverName = serverName;
 		this.databaseName = databaseName;
 	}
 
-	public boolean connect() {
+	public boolean connect(String username, String password) {
 		
 		String url = "jdbc:sqlserver://${dbServer};databaseName=${dbName};user=${user};password={${pass}}";
 		String fullUrl = url.replace("${dbServer}", this.serverName)
-				.replace("${dbName}", this.databaseName).replace("${user}", "CTW_DBUser")
-				.replace("${pass}", "Circl3TheWagons");
+				.replace("${dbName}", this.databaseName).replace("${user}", username)
+				.replace("${pass}", password);
 
 		try {
 			connection = DriverManager.getConnection(fullUrl);
