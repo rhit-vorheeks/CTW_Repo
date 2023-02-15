@@ -25,7 +25,9 @@ import javax.swing.plaf.DimensionUIResource;
 import java.util.*;
 
 public class TeamPage extends CoachDisplayPage {
-
+	
+	//new Font("TimesRoman", Font.PLAIN, 12)
+	
 	JPanel createPanel = new JPanel();
 	JPanel namePanel = new JPanel();
 	JPanel leaguePanel = new JPanel();
