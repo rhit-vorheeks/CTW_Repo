@@ -210,10 +210,12 @@ public class Main {
 				stmt.setDate(5, d);
 
 				SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
+//				java.util.Date date2 = sdf2.parse(endDate);
 				java.util.Date date2 = sdf2.parse(endDate);
+
 				java.sql.Date d2 = new java.sql.Date(date2.getTime());
 
-				stmt.setDate(6, d2);
+				stmt.setDate(6, null);
 
 				stmts.add(stmt);
 
@@ -260,10 +262,12 @@ public class Main {
 				stmt.setDate(4, d);
 
 				SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
+//				java.util.Date date2 = sdf2.parse(endDate);
 				java.util.Date date2 = sdf2.parse(endDate);
+
 				java.sql.Date d2 = new java.sql.Date(date2.getTime());
 
-				stmt.setDate(5, d2);
+				stmt.setDate(5, null);
 
 				stmts.add(stmt);
 

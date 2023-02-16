@@ -40,7 +40,6 @@ public class Main {
 		String serverName = prop.getProperty("serverName");
 		String databaseName = prop.getProperty("databaseName");
 
-//		DatabaseConnectionService connection = new DatabaseConnectionService("titan.csse.rose-hulman.edu", "CTW_DB");
 		DatabaseConnectionService connection =  new DatabaseConnectionService(serverName, databaseName);
 		connection.connect(serverUsername, serverPassword);
 		

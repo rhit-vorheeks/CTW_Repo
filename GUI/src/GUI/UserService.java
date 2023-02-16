@@ -39,7 +39,7 @@ public class UserService {
 
 		try {
 			PreparedStatement myStmt = dbService.getConnection().prepareStatement(
-					"SELECT Salt, Password, Type\nFROM [CTW_DB].[dbo].[Person]\nWhere Username = ?");
+					"SELECT Salt, Password, Type\nFROM [Person]\nWhere Username = ?");
 			myStmt.setString(1, username);
 			ResultSet rs = myStmt.executeQuery();
 						
