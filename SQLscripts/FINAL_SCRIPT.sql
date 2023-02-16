@@ -1,22 +1,28 @@
-CREATE DATABASE CTW_DB2
+
+--Declare @Name1 varchar(128)
+--Declare @Name2 varchar(128)
+
+--set @Name1 = 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\' + $(dbname) + '.mdf';
+--set @Name2 = 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\' + $(dbname) + '.ldf';
+
+CREATE DATABASE $(dbname)
 ON
-PRIMARY ( NAME=CTW_DB2,
-FILENAME='D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\CTW_DB2.mdf',
+PRIMARY (NAME=$(dbname),
+FILENAME= 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\file1.mdf',
 SIZE=6MB,
 MAXSIZE=30MB,
 FILEGROWTH=12%)
 LOG ON
-( NAME=CTW_DB2Log,
-FILENAME= 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\CTW_DB2.ldf',
+( NAME=DBLog,
+FILENAME= 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\file2.ldf',
 SIZE=3MB,
 MAXSIZE=22MB,
 FILEGROWTH=17%)
 COLLATE SQL_Latin1_General_Cp1_CI_AS
---SQLCMD -S <server> -U <username> -P <password> -Q "CREATE DATABASE $(DatabaseName);"
 
-DROP DATABASE CTW_DB2
-
-Use CTW_DB2
+GO
+Use $(dbname)
+GO
 
 CREATE USER [duvallar] FROM LOGIN [duvallar]; 
 exec sp_addrolemember 'db_owner', 'duvallar'; 
