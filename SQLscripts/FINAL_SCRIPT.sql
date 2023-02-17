@@ -1,28 +1,23 @@
-
---Declare @Name1 varchar(128)
---Declare @Name2 varchar(128)
-
---set @Name1 = 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\' + $(dbname) + '.mdf';
---set @Name2 = 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\' + $(dbname) + '.ldf';
-
-CREATE DATABASE $(dbname)
+CREATE DATABASE $(DatabaseName)
 ON
-PRIMARY (NAME=$(dbname),
-FILENAME= 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\file1.mdf',
+PRIMARY (NAME=$(DatabaseName),
+FILENAME= N'D:$(DataFileLocation)',
 SIZE=6MB,
 MAXSIZE=30MB,
 FILEGROWTH=12%)
 LOG ON
-( NAME=DBLog,
-FILENAME= 'D:\Database\MSSQL15.MSSQLSERVER\MSSQL\DATA\file2.ldf',
+(NAME=$(LogName),
+FILENAME= N'D:$(LogFileLocation)',
 SIZE=3MB,
 MAXSIZE=22MB,
 FILEGROWTH=17%)
 COLLATE SQL_Latin1_General_Cp1_CI_AS
 
+
 GO
-Use $(dbname)
+Use $(DatabaseName)
 GO
+
 
 CREATE USER [duvallar] FROM LOGIN [duvallar]; 
 exec sp_addrolemember 'db_owner', 'duvallar'; 
